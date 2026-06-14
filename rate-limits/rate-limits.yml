@@ -1,0 +1,50 @@
+name: Pocket Network Rate Limits
+description: Pocket Network's rate limiting strategy differs by access tier. The free public RPC portal enforces per-IP request limits as a fair-use safeguard, while dedicated access via POKT staking or PATH gateway operation carries no protocol-level rate limits. The decentralized architecture inherently distributes load across thousands of supplier nodes.
+url: https://docs.pocket.network/
+rateLimits:
+  - name: Public RPC Portal - Per IP
+    description: The free public API portal at api.pocket.network applies a dynamic fair-use rate limit per IP address. This protects shared infrastructure and ensures equitable access across all users.
+    plan: Public RPC (Free)
+    limit: 2000
+    unit: requests/minute
+    scope: per IP address
+    enforcement: Gateway-level rate limiter
+    notes: Limits may vary by chain and time of day. Endpoints subject to "fair use" policy — sustained high-volume usage may be throttled more aggressively. For production use with high throughput requirements, upgrade to staking-based access.
+  - name: Public RPC Portal - Historical Guideline
+    description: Historical documentation references 15-25 requests per second as a dynamic throughput guideline for public endpoints, equivalent to approximately 900-1500 requests per minute.
+    plan: Public RPC (Free)
+    limit: 25
+    unit: requests/second
+    scope: per IP address
+    enforcement: Dynamic — applied at gateway
+    notes: This is a soft reference figure; the primary enforced limit is 2000 requests/minute per IP as documented in current portal documentation.
+  - name: Application Staking - Protocol Level
+    description: Staked applications have no enforced rate limit at the protocol level. Relay capacity scales with the amount of POKT staked. The only practical constraint is the relay throughput of available supplier nodes.
+    plan: Application Staking (Self-Service)
+    limit: null
+    unit: relays/day
+    scope: per staked application
+    enforcement: None — capacity is stake-proportional
+    notes: Daily relay capacity is derived from on-chain stake weight. Suppliers may individually implement node-level limits, but the protocol does not impose global caps on staked applications.
+  - name: PATH Gateway - No Protocol Limit
+    description: Self-operated PATH gateways routing through Pocket Network's decentralized supplier pool are not subject to protocol-level rate limits. Effective throughput is bounded by infrastructure capacity and supplier node availability.
+    plan: PATH Gateway (Wholesale / Operator)
+    limit: null
+    unit: relays/day
+    scope: per gateway
+    enforcement: None at protocol level
+    notes: PATH operators are responsible for their own horizontal scaling. Prometheus metrics endpoint available at /metrics for monitoring relay throughput, error rates, and supplier health.
+headers:
+  - name: Content-Type
+    description: Must be application/json for all JSON-RPC relay requests
+    required: true
+  - name: X-Forwarded-For
+    description: Used by the gateway to identify originating IP for rate limit tracking on the public portal
+    required: false
+errorCodes:
+  - code: "429"
+    description: Too Many Requests — public portal rate limit exceeded. Reduce request frequency or upgrade to staked access.
+  - code: "502"
+    description: Bad Gateway — backend blockchain node unreachable or returned an error
+  - code: "503"
+    description: Service Unavailable — no supplier nodes available for the requested chain at this time

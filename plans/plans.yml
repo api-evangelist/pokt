@@ -1,0 +1,84 @@
+name: Pocket Network API Plans
+description: Pocket Network offers a tiered access model ranging from free public RPC endpoints to dedicated throughput via POKT token staking. The Shannon upgrade (June 2025) made the network fully permissionless — anyone can stake POKT to act as a Gateway operator or Supplier without centralized approval.
+url: https://pocket.network/
+plans:
+  - name: Public RPC (Free)
+    description: Free, keyless access to 60+ blockchain RPC endpoints through the public API portal at api.pocket.network. Suitable for development, testing, and light production workloads. No account or API key required — just copy the endpoint URL and start building.
+    url: https://api.pocket.network/
+    price: 0.00
+    unit: ""
+    rateLimits:
+      - name: Requests per Minute
+        description: Dynamic fair-use throughput cap applied per IP address
+        limit: 2000
+        unit: requests/minute
+    features:
+      - 60+ blockchain chains supported
+      - No API key required
+      - JSON-RPC 2.0 compatible
+      - Decentralized routing across 5000+ nodes
+      - EVM and non-EVM chains
+      - Mainnet and testnet endpoints
+  - name: Application Staking (Self-Service)
+    description: Stake POKT tokens on-chain to receive dedicated relay capacity proportional to your stake. Unlocks higher throughput without rate limits. Capacity scales linearly with the amount of POKT staked. Managed directly through the protocol.
+    url: https://docs.pocket.network/
+    price: null
+    unit: POKT tokens staked
+    rateLimits:
+      - name: Throughput
+        description: Unlimited — proportional to staked POKT
+        limit: null
+        unit: relays/day
+    features:
+      - Dedicated relay capacity proportional to stake
+      - No daily cap
+      - No RPS limit
+      - Permissionless — no approval required
+      - On-chain stake management
+  - name: Gateway Delegation (Managed)
+    description: Delegate your staked application to a gateway operator (such as Grove, Nodies, or other PATH-based gateways) for managed access with Quality of Service (QoS) guarantees. Recommended for production dApps needing SLA-backed RPC.
+    url: https://docs.pocket.network/foundation/api-portal/
+    price: null
+    unit: varies by gateway operator
+    rateLimits:
+      - name: Throughput
+        description: Unlimited — no rate limits imposed by protocol
+        limit: null
+        unit: relays/day
+    features:
+      - QoS guarantees from gateway operators
+      - Managed endpoint configuration
+      - SLA options depending on operator
+      - Decentralized backend routing
+      - EVM + non-EVM support
+  - name: Public Sponsorship
+    description: Chain foundations and ecosystem teams can sponsor increased throughput caps on the public RPC portal by sending POKT tokens to the application address for a given chain. New POKT is staked daily as received, increasing relay allocation for all public users of that chain's endpoint.
+    url: https://pocket.network/support-public-rpc/
+    price: null
+    unit: POKT tokens contributed
+    rateLimits:
+      - name: Throughput
+        description: Increased proportional to sponsored POKT
+        limit: null
+        unit: relays/day
+    features:
+      - Increases public endpoint capacity for a chain
+      - Community-driven open data funding model
+      - No centralized billing
+  - name: PATH Gateway (Wholesale / Operator)
+    description: Run your own PATH (Pocket API and Toolkit Harness) gateway on the Pocket Network, staking POKT and routing relays to on-chain suppliers. Wholesale pricing structure applies a per-relay burn rate based on chain-specific Compute Units, with volume rebates up to 40% for high-volume operators.
+    url: https://pocket.network/path-gateway/
+    price: 1.58
+    unit: per million Ethereum relays (1579 CUs/relay at $0.001 per CU)
+    rateLimits:
+      - name: Throughput
+        description: Unlimited — self-hosted gateway
+        limit: null
+        unit: relays/day
+    features:
+      - Open-source PATH framework
+      - Permissionless gateway deployment
+      - Volume rebates up to 40% above 1.25T CU/day
+      - Chain-specific Compute Unit pricing
+      - Prometheus metrics and health endpoints
+      - Self-hosted infrastructure control

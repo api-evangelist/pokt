@@ -1,0 +1,82 @@
+name: Pocket Network FinOps
+description: Pocket Network uses a Compute Unit (CU) based pricing model where each relay burns a chain-specific number of CUs on-chain. The cost of a CU is determined by the POKT token price and protocol parameters. Volume rebates of up to 40% are available for high-volume PATH gateway operators. The public portal is free, subsidized by the Pocket Network Foundation and ecosystem sponsors.
+url: https://pocket.network/save-on-rpc-path/
+currency: USD
+model: Compute Unit (CU) per relay burn
+token: POKT
+computeUnits:
+  description: Each relay consumes a fixed number of Compute Units (CUs) determined at the chain level. CU costs are set by protocol governance and reflect the relative computational complexity and cost of serving each chain.
+  baseCostPerCU: 0.000001
+  unit: USD per CU
+chains:
+  - chain: Ethereum
+    serviceId: eth
+    cuPerRelay: 1579
+    costPerMillionRelays: 1.58
+    endpoint: https://eth.api.pocket.network
+  - chain: Solana
+    serviceId: solana
+    cuPerRelay: 5033
+    costPerMillionRelays: 5.03
+    endpoint: https://solana.api.pocket.network
+  - chain: Polygon
+    serviceId: poly
+    cuPerRelay: 1118
+    costPerMillionRelays: 1.12
+    endpoint: https://poly.api.pocket.network
+  - chain: Arbitrum One
+    serviceId: arb-one
+    cuPerRelay: 2733
+    costPerMillionRelays: 2.73
+    endpoint: https://arb-one.api.pocket.network
+  - chain: Fantom
+    serviceId: fantom
+    cuPerRelay: 2501
+    costPerMillionRelays: 2.50
+    endpoint: https://fantom.api.pocket.network
+  - chain: Avalanche C-Chain
+    serviceId: avax
+    cuPerRelay: null
+    costPerMillionRelays: null
+    endpoint: https://avax.api.pocket.network
+  - chain: Optimism
+    serviceId: op
+    cuPerRelay: null
+    costPerMillionRelays: null
+    endpoint: https://op.api.pocket.network
+  - chain: Base
+    serviceId: base
+    cuPerRelay: null
+    costPerMillionRelays: null
+    endpoint: https://base.api.pocket.network
+rebates:
+  description: PATH gateway operators receive volume-based rebates on the on-chain CU burn fee. Rebates scale linearly between thresholds and apply to all chains equally.
+  tiers:
+    - threshold: Below 250B CUs/day
+      relayEquivalent: ~105M relays/day (Ethereum basis)
+      rebatePercent: 0
+      netCostPerMillionEthRelays: 1.58
+    - threshold: 250B CUs/day
+      relayEquivalent: ~105M relays/day
+      rebatePercent: 10
+      netCostPerMillionEthRelays: 1.42
+    - threshold: 1250B CUs/day
+      relayEquivalent: ~525M relays/day
+      rebatePercent: 40
+      netCostPerMillionEthRelays: 0.95
+  interpolation: Linear between 250B and 1250B CU/day thresholds
+  maxRebate: 40%
+  netPriceRange: "$0.95–$3.02 per million relays (post-rebate, chain-dependent)"
+publicPortal:
+  description: The free public RPC portal is subsidized by the Pocket Network Foundation. No cost to consumers. Chain foundations and ecosystem partners can increase per-chain capacity by donating POKT tokens to the chain's application address.
+  costToConsumer: 0.00
+  fundingSource: Pocket Network Foundation + ecosystem sponsors
+  sponsorshipModel: POKT tokens staked to chain application address; relay capacity proportional to staked amount
+infrastructure:
+  description: Additional costs for PATH gateway operators running self-hosted infrastructure
+  estimatedHostingCost: ~$80/month for basic VPS
+  notes: Operators pay hosting costs separately from protocol CU burn fees. PATH is open-source and can run on any cloud or on-premises hardware.
+comparisonContext:
+  description: Pocket Network positions its pricing as dramatically lower than centralized RPC alternatives
+  claimedSavings: 50%+ versus comparable centralized providers
+  referenceUrl: https://pocket.network/save-on-rpc-path/

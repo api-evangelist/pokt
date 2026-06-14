@@ -1,0 +1,32 @@
+{
+  "name": "eth_call via PATH Gateway",
+  "description": "Execute a smart contract call through Pocket Network PATH gateway",
+  "request": {
+    "method": "POST",
+    "url": "https://eth.rpc.grove.city/v1",
+    "headers": {
+      "Content-Type": "application/json",
+      "Portal-Application-ID": "YOUR_APP_ID"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "data": "0x18160ddd"
+        },
+        "latest"
+      ],
+      "id": 1
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": "0x000000000000000000000000000000000000000000000000000000174876e800"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_proof_Proof.json",
+  "title": "pocket.proof.Proof",
+  "type": "object",
+  "properties": {
+    "closest_merkle_proof": {
+      "description": "The serialized SMST compacted proof from the `#ClosestProof()` method.",
+      "type": "string",
+      "format": "byte"
+    },
+    "session_header": {
+      "description": "The session header of the session that this claim is for.",
+      "$ref": "#/definitions/pocket.session.SessionHeader"
+    },
+    "supplier_operator_address": {
+      "description": "Address of the supplier's operator that submitted this proof.",
+      "type": "string"
+    }
+  }
+}

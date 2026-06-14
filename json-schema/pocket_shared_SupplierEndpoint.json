@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_shared_SupplierEndpoint.json",
+  "title": "SupplierEndpoint message to hold service configuration details",
+  "type": "object",
+  "properties": {
+    "configs": {
+      "type": "array",
+      "title": "Additional configuration options for the endpoint",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/pocket.shared.ConfigOption"
+      }
+    },
+    "rpc_type": {
+      "title": "Type of RPC exposed on the url above",
+      "$ref": "#/definitions/pocket.shared.RPCType"
+    },
+    "url": {
+      "type": "string",
+      "title": "URL of the endpoint"
+    }
+  }
+}

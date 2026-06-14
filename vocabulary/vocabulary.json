@@ -1,0 +1,94 @@
+{
+  "vocabulary": [
+    {
+      "term": "POKT",
+      "definition": "The native utility token of the Pocket Network blockchain used for staking by applications, gateways, and suppliers",
+      "domain": "tokenomics"
+    },
+    {
+      "term": "Supplier",
+      "definition": "A node operator that stakes POKT tokens to provide RPC service to the network. Formerly called a 'servicer' in Morse.",
+      "domain": "protocol"
+    },
+    {
+      "term": "Gateway",
+      "definition": "An entity that stakes POKT and routes relay requests from applications to suppliers on behalf of app developers",
+      "domain": "protocol"
+    },
+    {
+      "term": "Application",
+      "definition": "A blockchain application or developer that stakes POKT to access Pocket Network RPC services",
+      "domain": "protocol"
+    },
+    {
+      "term": "Session",
+      "definition": "A time-bounded, deterministic matching of applications to suppliers for serving relays, based on on-chain data",
+      "domain": "protocol"
+    },
+    {
+      "term": "Relay",
+      "definition": "A single RPC request routed from an application through a gateway to a supplier node on the network",
+      "domain": "protocol"
+    },
+    {
+      "term": "Service",
+      "definition": "A blockchain network or RPC endpoint type supported by Pocket Network, identified by a service ID (e.g., 'eth', 'polygon')",
+      "domain": "protocol"
+    },
+    {
+      "term": "ServiceID",
+      "definition": "A short identifier string for a supported blockchain service (e.g., 'eth' for Ethereum, 'avax' for Avalanche)",
+      "domain": "api"
+    },
+    {
+      "term": "PATH",
+      "definition": "Pocket API & Toolkit Harness - an open-source framework for deploying permissionless gateways on Pocket Network",
+      "domain": "infrastructure"
+    },
+    {
+      "term": "Shannon",
+      "definition": "The current protocol upgrade of Pocket Network (launched June 2025), enabling permissionless staking for gateways and suppliers",
+      "domain": "protocol"
+    },
+    {
+      "term": "Morse",
+      "definition": "The legacy version of the Pocket Network protocol, being sunset in favor of Shannon",
+      "domain": "protocol"
+    },
+    {
+      "term": "Proof",
+      "definition": "Cryptographic evidence submitted by a supplier after completing a relay session to claim token rewards",
+      "domain": "protocol"
+    },
+    {
+      "term": "Claim",
+      "definition": "A supplier's on-chain assertion of the number of relays served in a session, prior to proof submission",
+      "domain": "protocol"
+    },
+    {
+      "term": "Stake",
+      "definition": "The act of locking POKT tokens on-chain to participate as an application, gateway, or supplier on the network",
+      "domain": "tokenomics"
+    },
+    {
+      "term": "CometBFT",
+      "definition": "The Byzantine fault-tolerant consensus engine underlying the Pocket Network Shannon chain (formerly Tendermint)",
+      "domain": "infrastructure"
+    },
+    {
+      "term": "JSON-RPC",
+      "definition": "The remote procedure call protocol used for blockchain node interactions; all EVM-compatible chains use JSON-RPC 2.0",
+      "domain": "api"
+    },
+    {
+      "term": "Grove",
+      "definition": "Grove Inc., a company that operates the Grove gateway (grove.city) on top of Pocket Network's PATH framework",
+      "domain": "ecosystem"
+    },
+    {
+      "term": "Portal-Application-ID",
+      "definition": "HTTP header required when using production Grove gateway endpoints to identify the developer application",
+      "domain": "api"
+    }
+  ]
+}

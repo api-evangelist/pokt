@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_shared_Service.json",
+  "title": "Service message to encapsulate unique and semantic identifiers for a service on the network",
+  "type": "object",
+  "properties": {
+    "compute_units_per_relay": {
+      "description": "Compute units required per relay for this service",
+      "type": "string",
+      "format": "uint64",
+      "title": "The cost of a single relay for this service in terms of compute units.\nMust be used alongside the global 'compute_units_to_tokens_multiplier' to calculate the cost of a relay for this service.\ncost_per_relay_for_specific_service = compute_units_per_relay_for_specific_service * compute_units_to_tokens_multiplier_global_value"
+    },
+    "id": {
+      "description": "Unique identifier for the service",
+      "type": "string",
+      "title": "For example, what if we want to request a session for a certain service but with some additional configs that identify it?"
+    },
+    "metadata": {
+      "description": "Optional metadata containing an experimental API specification for the service.\nWhen exposed via JSON, this field is base64 encoded and MUST be <= 100 KiB when decoded.",
+      "$ref": "#/definitions/pocket.shared.Metadata"
+    },
+    "name": {
+      "description": "(Optional) Human readable description of the service",
+      "type": "string",
+      "title": "TODO_POST_MAINNET: Rename service.name to service.description"
+    },
+    "owner_address": {
+      "description": "The owner address that created the service.\nIt is the address that receives rewards based on the Service's onchain usage\nIt is the only address that can update the service configuration (e.g. compute_units_per_relay),\nor make other updates to it.\n\nThe Bech32 address of the service owner / creator",
+      "type": "string"
+    }
+  }
+}

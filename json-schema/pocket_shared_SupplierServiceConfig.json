@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_shared_SupplierServiceConfig.json",
+  "title": "SupplierServiceConfig holds the service configuration the supplier stakes for",
+  "type": "object",
+  "properties": {
+    "endpoints": {
+      "type": "array",
+      "title": "List of endpoints for the service",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/pocket.shared.SupplierEndpoint"
+      }
+    },
+    "rev_share": {
+      "type": "array",
+      "title": "List of revenue share configurations for the service",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/pocket.shared.ServiceRevenueShare"
+      }
+    },
+    "service_id": {
+      "type": "string",
+      "title": "The Service ID for which the supplier is configured"
+    }
+  }
+}

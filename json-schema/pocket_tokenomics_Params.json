@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_tokenomics_Params.json",
+  "title": "pocket.tokenomics.Params",
+  "description": "Params defines the parameters for the tokenomics module.",
+  "type": "object",
+  "properties": {
+    "dao_reward_address": {
+      "description": "dao_reward_address is where the DAO's portion of claims submitted are distributed.\n\nBech32 cosmos address",
+      "type": "string"
+    },
+    "global_inflation_per_claim": {
+      "description": "global_inflation_per_claim is the percentage of a claim's claimable uPOKT amount to be minted on settlement.\nGlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.",
+      "type": "number",
+      "format": "double"
+    },
+    "mint_allocation_percentages": {
+      "description": "mint_allocation_percentages represents the distribution of newly minted tokens.\nGlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.",
+      "$ref": "#/definitions/pocket.tokenomics.MintAllocationPercentages"
+    },
+    "mint_equals_burn_claim_distribution": {
+      "description": "mint_equals_burn_claim_distribution controls how the settlement amount is distributed\nwhen global inflation is disabled (global_inflation_per_claim = 0).\nMintEqualsBurnTLM: Only used by the MintEqualsBurnTLM at the end of claim settlement.",
+      "$ref": "#/definitions/pocket.tokenomics.MintEqualsBurnClaimDistribution"
+    }
+  }
+}

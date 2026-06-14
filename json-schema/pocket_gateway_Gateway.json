@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_gateway_Gateway.json",
+  "title": "pocket.gateway.Gateway",
+  "type": "object",
+  "properties": {
+    "address": {
+      "type": "string",
+      "title": "The Bech32 address of the gateway"
+    },
+    "stake": {
+      "title": "The total amount of uPOKT the gateway has staked",
+      "$ref": "#/definitions/cosmos.base.v1beta1.Coin"
+    },
+    "unstake_session_end_height": {
+      "type": "string",
+      "format": "uint64",
+      "title": "Session end height at which the gateway initiated unstaking (0 if not unstaking)"
+    }
+  }
+}

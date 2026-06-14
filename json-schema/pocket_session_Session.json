@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_session_Session.json",
+  "title": "pocket.session.Session",
+  "description": "Session is a fully hydrated session object that contains all the information for the Session\nand its participants.",
+  "type": "object",
+  "properties": {
+    "application": {
+      "title": "A fully hydrated application object this session is for",
+      "$ref": "#/definitions/pocket.application.Application"
+    },
+    "header": {
+      "title": "The header of the session containing lightweight data",
+      "$ref": "#/definitions/pocket.session.SessionHeader"
+    },
+    "num_blocks_per_session": {
+      "type": "string",
+      "format": "int64",
+      "title": "The number of blocks per session when this session started"
+    },
+    "session_id": {
+      "type": "string",
+      "title": "A unique pseudorandom ID for this session"
+    },
+    "session_number": {
+      "type": "string",
+      "format": "int64",
+      "title": "The session number since genesis"
+    },
+    "suppliers": {
+      "type": "array",
+      "title": "A fully hydrated set of servicers that are serving the application",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/pocket.shared.Supplier"
+      }
+    }
+  }
+}

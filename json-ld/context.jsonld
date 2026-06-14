@@ -1,0 +1,89 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "pokt": "https://pocket.network/vocab/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "version": "schema:version",
+    "Application": {
+      "@id": "pokt:Application",
+      "@type": "@id"
+    },
+    "Gateway": {
+      "@id": "pokt:Gateway",
+      "@type": "@id"
+    },
+    "Supplier": {
+      "@id": "pokt:Supplier",
+      "@type": "@id"
+    },
+    "Service": {
+      "@id": "pokt:Service",
+      "@type": "@id"
+    },
+    "Session": {
+      "@id": "pokt:Session",
+      "@type": "@id"
+    },
+    "Relay": {
+      "@id": "pokt:Relay",
+      "@type": "@id"
+    },
+    "Proof": {
+      "@id": "pokt:Proof",
+      "@type": "@id"
+    },
+    "Claim": {
+      "@id": "pokt:Claim",
+      "@type": "@id"
+    },
+    "address": {
+      "@id": "pokt:address",
+      "@type": "xsd:string"
+    },
+    "stake": {
+      "@id": "pokt:stake",
+      "@type": "xsd:string"
+    },
+    "serviceId": {
+      "@id": "pokt:serviceId",
+      "@type": "xsd:string"
+    },
+    "delegateeGatewayAddresses": {
+      "@id": "pokt:delegateeGatewayAddresses",
+      "@type": "xsd:string",
+      "@container": "@list"
+    },
+    "sessionHeader": {
+      "@id": "pokt:sessionHeader",
+      "@type": "@id"
+    },
+    "numRelays": {
+      "@id": "pokt:numRelays",
+      "@type": "xsd:integer"
+    },
+    "numComputeUnits": {
+      "@id": "pokt:numComputeUnits",
+      "@type": "xsd:integer"
+    },
+    "blockHash": {
+      "@id": "pokt:blockHash",
+      "@type": "xsd:string"
+    },
+    "blockHeight": {
+      "@id": "pokt:blockHeight",
+      "@type": "xsd:integer"
+    },
+    "tokenomicsParams": {
+      "@id": "pokt:tokenomicsParams",
+      "@type": "@id"
+    },
+    "mintAllocationPercentages": {
+      "@id": "pokt:mintAllocationPercentages",
+      "@type": "@id"
+    }
+  }
+}

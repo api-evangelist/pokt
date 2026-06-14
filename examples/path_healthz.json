@@ -1,0 +1,22 @@
+{
+  "name": "PATH Gateway Health Check",
+  "description": "Check the health status of a PATH gateway instance",
+  "request": {
+    "method": "GET",
+    "url": "https://eth.rpc.grove.city/healthz",
+    "headers": {
+      "Target-Service-Id": "eth"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "services": [
+        "eth",
+        "polygon",
+        "base"
+      ]
+    }
+  }
+}

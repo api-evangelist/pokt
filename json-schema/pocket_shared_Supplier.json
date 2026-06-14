@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/pokt/main/json-schema/pocket_shared_Supplier.json",
+  "title": "Supplier represents an actor in Pocket Network that provides RPC services",
+  "type": "object",
+  "properties": {
+    "operator_address": {
+      "description": "Operator address managing the offchain server\nImmutable for supplier's lifespan - requires unstake/re-stake to change.\nCan update supplier configs except for owner address.",
+      "type": "string"
+    },
+    "owner_address": {
+      "type": "string",
+      "title": "Owner address that controls the staked funds and receives rewards by default\nCannot be updated by the operator"
+    },
+    "service_config_history": {
+      "description": "List of historical service configuration updates, tracking the suppliers\nservices update and corresponding activation heights.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/pocket.shared.ServiceConfigUpdate"
+      }
+    },
+    "services": {
+      "type": "array",
+      "title": "List of service configurations supported by this supplier",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/pocket.shared.SupplierServiceConfig"
+      }
+    },
+    "stake": {
+      "title": "Total amount of staked uPOKT",
+      "$ref": "#/definitions/cosmos.base.v1beta1.Coin"
+    },
+    "unstake_session_end_height": {
+      "type": "string",
+      "format": "uint64",
+      "title": "Session end height when supplier initiated unstaking (0 if not unstaking)"
+    }
+  }
+}

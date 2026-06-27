@@ -85,7 +85,7 @@ common:
     url: https://docs.pocket.network/
   - type: GitHubOrganization
     url: https://github.com/pokt-network/
-  - type: Forum
+  - type: Forums
     url: https://forum.pokt.network/
   - type: Discord
     url: https://discord.gg/pokt

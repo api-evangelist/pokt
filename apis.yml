@@ -79,6 +79,8 @@ apis:
       - FN: Pocket Network Foundation
         url: https://forum.pokt.network/
 common:
+  - type: DomainSecurity
+    url: security/pokt-domain-security.yml
   - type: Website
     url: https://pocket.network/
   - type: Documentation

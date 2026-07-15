@@ -79,6 +79,8 @@ apis:
       - FN: Pocket Network Foundation
         url: https://forum.pokt.network/
 common:
+  - type: AgenticAccess
+    url: agentic-access/pokt-agentic-access.yml
   - type: DomainSecurity
     url: security/pokt-domain-security.yml
   - type: Website

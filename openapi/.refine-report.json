@@ -1,0 +1,18 @@
+{
+  "provider": "pokt",
+  "sources": [
+    "pokt-api-api-openapi.yml",
+    "pokt-msg-api-openapi.yml",
+    "pokt-query-api-openapi.yml"
+  ],
+  "outputs": [
+    "pokt-api-api-openapi.yml",
+    "pokt-msg-api-openapi.yml",
+    "pokt-query-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

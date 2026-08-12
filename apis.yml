@@ -134,6 +134,9 @@ apis:
   - type: FinOps
     url: https://github.com/api-evangelist/pokt/blob/main/finops/finops.yml
 common:
+  - type: License
+    name: MIT
+    url: https://github.com/pokt-network/poktroll/blob/main/LICENSE
   - type: AgenticAccess
     url: agentic-access/pokt-agentic-access.yml
   - type: DomainSecurity

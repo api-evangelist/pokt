@@ -1,0 +1,706 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "PATH - Path & Toolkit Harness API Query API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Query",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_AllApplications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/application/application",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              },
+              {
+                "name": "delegatee_gateway_address",
+                "value": "",
+                "type": "query",
+                "description": "TODO_MAINNET(@adshmh): rename this field to `gateway_address_delegated_to`\ndelegatee_gateway_address, if specified, filters the application list to only include those with delegation to the specified gateway address."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of Application items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/application/application/:address",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Queries a list of Application items."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/application/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_AllGateways",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/gateway/gateway",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of Gateway items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/gateway/gateway/:address",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Queries a list of Gateway items."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/gateway/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_MorseClaimableAccountAll",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/migration/morse_claimable_account",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of MorseClaimableAccount items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/migration/morse_claimable_account/:address",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Queries a list of MorseClaimableAccount items."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/migration/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_AllClaims",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/proof/claim",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              },
+              {
+                "name": "supplier_operator_address",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "session_end_height",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of Claim items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/proof/claim/:session_id/:supplier_operator_address",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "supplier_operator_address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Queries a list of Claim items."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/proof/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_AllProofs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/proof/proof",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              },
+              {
+                "name": "supplier_operator_address",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "session_end_height",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of Proof items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/proof/proof/:session_id/:supplier_operator_address",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "supplier_operator_address",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Queries a list of Proof items."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/service/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_RelayMiningDifficultyAll",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/service/relay_mining_difficulty",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of RelayMiningDifficulty items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/service/relay_mining_difficulty/:serviceId",
+            "params": [
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Queries a list of RelayMiningDifficulty items."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_AllServices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/service/service",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of Service items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/service/service/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "TODO_IMPROVE: We could support getting services by name."
+              }
+            ]
+          },
+          "docs": "Queries a list of Service items."
+        },
+        {
+          "info": {
+            "name": "Queries the session given app_address, service and block_height.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/session/get_session",
+            "params": [
+              {
+                "name": "application_address",
+                "value": "",
+                "type": "query",
+                "description": "The Bech32 address of the application."
+              },
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "query",
+                "description": "The service ID to query the session for"
+              },
+              {
+                "name": "block_height",
+                "value": "",
+                "type": "query",
+                "description": "The block height to query the session for"
+              }
+            ]
+          },
+          "docs": "Queries the session given app_address, service and block_height."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/session/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/shared/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/supplier/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        },
+        {
+          "info": {
+            "name": "GithubCompoktNetworkpoktrollQuery_AllSuppliers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/supplier/supplier",
+            "params": [
+              {
+                "name": "pagination.key",
+                "value": "",
+                "type": "query",
+                "description": "key is a value returned in PageResponse.next_key to begin\nquerying the next page most efficiently. Only one of offset or key\nshould be set."
+              },
+              {
+                "name": "pagination.offset",
+                "value": "",
+                "type": "query",
+                "description": "offset is a numeric offset that can be used when key is unavailable.\nIt is less efficient than using key. Only one of offset or key should\nbe set."
+              },
+              {
+                "name": "pagination.limit",
+                "value": "",
+                "type": "query",
+                "description": "limit is the total number of results to be returned in the result page.\nIf left empty it will default to a value to be set by each app."
+              },
+              {
+                "name": "pagination.count_total",
+                "value": "",
+                "type": "query",
+                "description": "count_total is set to true  to indicate that the result set should include\na count of the total number of items available for pagination in UIs.\ncount_total is only respected when offset is used. It is ignored when key\nis set."
+              },
+              {
+                "name": "pagination.reverse",
+                "value": "",
+                "type": "query",
+                "description": "reverse is set to true if results are to be returned in the descending order."
+              },
+              {
+                "name": "service_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional filters that can be combined (AND logic)\n\nunique service identifier to filter by"
+              },
+              {
+                "name": "operator_address",
+                "value": "",
+                "type": "query",
+                "description": "supplier operator address to filter by"
+              },
+              {
+                "name": "owner_address",
+                "value": "",
+                "type": "query",
+                "description": "supplier owner address to filter by"
+              },
+              {
+                "name": "dehydrated",
+                "value": "",
+                "type": "query",
+                "description": "if true, return a dehydrated version of the supplier.\nWhy? This enables smaller response payloads to reduce pagination of the supplier list.\nExample: Removes service_config_history and rev_share details from the response. See the implementation for more details."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Queries a list of Supplier items.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/supplier/supplier/:operator_address",
+            "params": [
+              {
+                "name": "operator_address",
+                "value": "",
+                "type": "path",
+                "description": "TODO_TECHDEBT: Add the ability to query for a supplier by owner_id"
+              },
+              {
+                "name": "dehydrated",
+                "value": "",
+                "type": "query",
+                "description": "if true, return a dehydrated version of the supplier.\nWhy? This enables smaller response payloads to reduce payload size.\nExample: Removes service_config_history and rev_share details from the response. See the implementation for more details."
+              }
+            ]
+          },
+          "docs": "Queries a list of Supplier items."
+        },
+        {
+          "info": {
+            "name": "Parameters queries the parameters of the module.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{serviceId}.rpc.grove.city/pokt-network/poktroll/tokenomics/params"
+          },
+          "docs": "Parameters queries the parameters of the module."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,404 @@
+{
+  "item": [
+    {
+      "id": "89d7ba93-8f81-4ee3-a87a-c470ba9300ef",
+      "name": "API",
+      "description": {
+        "content": "PATH API endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a38426f4-bb6e-43f4-aa7b-c03b55bf7f4b",
+          "name": "EVM Service Request",
+          "request": {
+            "name": "EVM Service Request",
+            "description": {
+              "content": "Handles EVM service requests. This endpoint processes API requests and forwards them to the appropriate endpoint in the Pocket Network.\n\n**Server Usage & Authentication:**\n- **Subdomain URLs** (`https://{serviceId}.rpc.grove.city`):\n  - Service ID determined from subdomain, no `Target-Service-Id` header needed\n  - **Requires** `Portal-Application-ID` header with your Grove Portal Application ID\n  - **Optional** `Authorization` header with Grove API Key (if your portal app requires it)\n- **Local PATH** (`http://localhost:3069`):\n  - **Requires** `Target-Service-Id` header to specify the service\n  - No authentication headers required\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                  "type": "any",
+                  "value": "{{serviceId}}",
+                  "key": "serviceId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Grove Portal Application ID for authentication.\n\n**Required when using:**\n- `https://{serviceId}.rpc.grove.city` (production subdomain URLs)\n\n**Not required when using:**\n- `http://localhost:3069` (local PATH instance)\n\nGet yours at https://portal.grove.city/\n",
+                "key": "Portal-Application-ID",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "The service ID to route the request to (required for local PATH instance)\n\n**Required when using:**\n- `http://localhost:3069` (local PATH instance)\n\n**Not required when using:**\n- `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)\n\nWhen using subdomain-based URLs, the service ID is automatically determined from the subdomain.\n",
+                "key": "Target-Service-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"params\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d5180e92-b2f1-42b1-9857-2ecd78110f2c",
+              "name": "Successful JSON-RPC response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                      "type": "any",
+                      "value": "{{serviceId}}",
+                      "key": "serviceId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Grove Portal Application ID for authentication.\n\n**Required when using:**\n- `https://{serviceId}.rpc.grove.city` (production subdomain URLs)\n\n**Not required when using:**\n- `http://localhost:3069` (local PATH instance)\n\nGet yours at https://portal.grove.city/\n",
+                    "key": "Portal-Application-ID",
+                    "value": "your-grove-portal-app-id"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Grove API Key for authorization (optional).\n\n**When to use:**\n- Required if your Grove Portal application requires API key authorization\n- Not required for applications without API key restrictions\n- Only applicable when using production URLs (`https://{serviceId}.rpc.grove.city`)\n- Not used with local PATH instances (`http://localhost:3069`)\n\nGet yours at https://portal.grove.city/\n",
+                    "key": "Authorization",
+                    "value": "your-api-key"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The service ID to route the request to (required for local PATH instance)\n\n**Required when using:**\n- `http://localhost:3069` (local PATH instance)\n\n**Not required when using:**\n- `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)\n\nWhen using subdomain-based URLs, the service ID is automatically determined from the subdomain.\n",
+                    "key": "Target-Service-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"eth_blockNumber\",\n  \"params\": [],\n  \"id\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"result\": \"0xc96eae\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6afd4e11-08e4-4ead-975e-2a1ddaeb2347",
+          "name": "Health Check",
+          "request": {
+            "name": "Health Check",
+            "description": {
+              "content": "Returns a JSON health check response indicating the ready status of PATH",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "healthz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                  "type": "any",
+                  "value": "{{serviceId}}",
+                  "key": "serviceId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad039bf5-16c6-4c1c-924d-c3c1f0351bad",
+              "name": "Health check successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                      "type": "any",
+                      "value": "{{serviceId}}",
+                      "key": "serviceId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"message\": \"PATH is up and running\",\n  \"version\": \"1.0.0\",\n  \"readyStates\": {\n    \"endpoint-hydrator\": true,\n    \"pokt-shannon\": true\n  },\n  \"configuredServiceIDs\": [\n    \"eth\",\n    \"poly\",\n    \"avax\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fbeca011-52e6-46f2-b5a7-7ebb34b213c1",
+          "name": "Disqualified Endpoints",
+          "request": {
+            "name": "Disqualified Endpoints",
+            "description": {
+              "content": "Returns a JSON list of disqualified endpoints for a given service ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "disqualified_endpoints"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                  "type": "any",
+                  "value": "{{serviceId}}",
+                  "key": "serviceId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The service ID to route the request to (required for local PATH instance)\n\n**Required when using:**\n- `http://localhost:3069` (local PATH instance)\n\n**Not required when using:**\n- `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)\n\nWhen using subdomain-based URLs, the service ID is automatically determined from the subdomain.\n",
+                "key": "Target-Service-Id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50179766-2a50-4bea-802b-5ec38eb5134f",
+              "name": "Successfully retrieved disqualified endpoints",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disqualified_endpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                      "type": "any",
+                      "value": "{{serviceId}}",
+                      "key": "serviceId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "The service ID to route the request to (required for local PATH instance)\n\n**Required when using:**\n- `http://localhost:3069` (local PATH instance)\n\n**Not required when using:**\n- `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)\n\nWhen using subdomain-based URLs, the service ID is automatically determined from the subdomain.\n",
+                    "key": "Target-Service-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"protocol_level_data_response\": {\n    \"permanently_sanctioned_endpoints\": {},\n    \"session_sanctioned_endpoints\": {},\n    \"permanent_sanctioned_endpoints_count\": 0,\n    \"session_sanctioned_endpoints_count\": 0,\n    \"total_sanctioned_endpoints_count\": 0\n  },\n  \"qos_level_data_response\": {\n    \"disqualified_endpoints\": {},\n    \"empty_response_count\": 0,\n    \"chain_id_check_errors_count\": 0,\n    \"archival_check_errors_count\": 0,\n    \"block_number_check_errors_count\": 0\n  },\n  \"total_service_endpoints_count\": 5,\n  \"valid_service_endpoints_count\": 5,\n  \"invalid_service_endpoints_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a875dd2-08e1-4945-a20a-b7ef976a4219",
+              "name": "Bad request - Target-Service-Id header is required or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "disqualified_endpoints"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+                      "type": "any",
+                      "value": "{{serviceId}}",
+                      "key": "serviceId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "The service ID to route the request to (required for local PATH instance)\n\n**Required when using:**\n- `http://localhost:3069` (local PATH instance)\n\n**Not required when using:**\n- `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)\n\nWhen using subdomain-based URLs, the service ID is automatically determined from the subdomain.\n",
+                    "key": "Target-Service-Id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"400 Bad Request\",\n  \"message\": \"Target-Service-Id header is required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The service ID that determines the subdomain (This can only be one of arb-one,arb-sepolia-testnet,avax,avax-dfk,base,base-sepolia-testnet,bera,bitcoin,blast,boba,bsc,celo,eth,eth-holesky-testnet,eth-sepolia-testnet,fantom,fraxtal,fuse,gnosis,harmony,ink,iotex,kaia,kava,linea,mantle,metis,moonbeam,moonriver,near,oasys,op,op-sepolia-testnet,opbnb,pocket,poly,poly-amoy-testnet,poly-zkevm,radix,scroll,sei,sonic,sui,taiko,taiko-hekla-testnet,tron,xrplevm,xrplevm-testnet,zklink-nova,zksync-era)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "eth",
+      "key": "serviceId"
+    },
+    {
+      "type": "string",
+      "value": "https://{{serviceId}}.rpc.grove.city",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8fac891a-e62c-4c13-977a-305808028d08",
+    "name": "PATH - Path & Toolkit Harness API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "PATH (Path API & Toolkit Harness) is an open source framework for enabling access to a decentralized supply network. It provides various tools and libraries to streamline the integration and interaction with decentralized protocols.\n\nContact Support:\n Name: Grove Engineering\n Email: engineering@grove.city",
+      "type": "text/plain"
+    }
+  }
+}

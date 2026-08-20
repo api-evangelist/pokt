@@ -57,6 +57,11 @@ apis:
   tags:
   - Gateway
   - Infrastructure
+  - Path
+  - Open-Source
+  tags_raw:
+  - Gateway
+  - Infrastructure
   - PATH
   - Open Source
   properties:
@@ -72,7 +77,8 @@ apis:
   description: PATH API endpoints
   humanURL: https://api.pocket.network/
   baseURL: https://api.pocket.network
-  tags:
+  tags: []
+  tags_raw:
   - API
   properties:
   - type: OpenAPI

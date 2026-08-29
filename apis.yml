@@ -1,5 +1,19 @@
 name: Pocket Network
 description: Pocket Network is a decentralized, permissionless RPC infrastructure network providing free public API access to 60+ blockchain chains including Ethereum, Avalanche, Polygon, Solana, and other EVM-compatible and non-EVM networks. The Shannon upgrade (June 2025) made Pocket the first open, permissionless API network where anyone can stake POKT tokens to deploy gateways and supply nodes without centralized approval.
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: true
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
@@ -140,6 +154,10 @@ apis:
   - type: FinOps
     url: https://github.com/api-evangelist/pokt/blob/main/finops/finops.yml
 common:
+  - type: IssueTracker
+    url: https://github.com/pokt-network/poktroll/issues
+  - type: Releases
+    url: https://github.com/pokt-network/poktroll/releases
   - type: License
     name: MIT
     url: https://github.com/pokt-network/poktroll/blob/main/LICENSE

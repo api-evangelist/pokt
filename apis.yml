@@ -71,7 +71,7 @@ apis:
   tags:
   - Gateway
   - Infrastructure
-  - Path
+  - PATH
   - Open-Source
   tags_raw:
   - Gateway

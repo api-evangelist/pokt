@@ -71,7 +71,7 @@ apis:
   humanURL: https://pocket.network/path-gateway/
   baseURL: https://path.grove.city
   tags:
-  - Gateway
+  - Gateways
   - Infrastructure
   - Path
   - Open-Source

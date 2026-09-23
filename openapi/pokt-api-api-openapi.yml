@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: PATH - Path & Toolkit Harness API API
+  title: PATH - Path & Toolkit Harness API
   description: PATH (Path API & Toolkit Harness) is an open source framework for enabling access to a decentralized supply network. It provides various tools and libraries to streamline the integration and interaction with decentralized protocols.
   version: 1.0.0
   contact:
@@ -69,15 +69,32 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: API
+- name: api
   description: PATH API endpoints
 paths:
   /v1:
     post:
       tags:
-      - API
+      - api
       summary: EVM Service Request
-      description: "Handles EVM service requests. This endpoint processes API requests and forwards them to the appropriate endpoint in the Pocket Network.\n\n**Server Usage & Authentication:**\n- **Subdomain URLs** (`https://{serviceId}.rpc.grove.city`):\n  - Service ID determined from subdomain, no `Target-Service-Id` header needed\n  - **Requires** `Portal-Application-ID` header with your Grove Portal Application ID\n  - **Optional** `Authorization` header with Grove API Key (if your portal app requires it)\n- **Local PATH** (`http://localhost:3069`):\n  - **Requires** `Target-Service-Id` header to specify the service\n  - No authentication headers required\n"
+      description: 'Handles EVM service requests. This endpoint processes API requests and forwards them to the appropriate endpoint in the Pocket Network.
+
+
+        **Server Usage & Authentication:**
+
+        - **Subdomain URLs** (`https://{serviceId}.rpc.grove.city`):
+
+        - Service ID determined from subdomain, no `Target-Service-Id` header needed
+
+        - **Requires** `Portal-Application-ID` header with your Grove Portal Application ID
+
+        - **Optional** `Authorization` header with Grove API Key (if your portal app requires it)
+
+        - **Local PATH** (`http://localhost:3069`):
+
+        - **Requires** `Target-Service-Id` header to specify the service
+
+        - No authentication headers required'
       operationId: 1handleServiceRequest
       parameters:
       - $ref: '#/components/parameters/PortalApplicationIdParam'
@@ -317,7 +334,7 @@ paths:
   /healthz:
     get:
       tags:
-      - API
+      - api
       summary: Health Check
       description: Returns a JSON health check response indicating the ready status of PATH
       operationId: 2healthCheck
@@ -357,7 +374,7 @@ paths:
   /disqualified_endpoints:
     get:
       tags:
-      - API
+      - api
       summary: Disqualified Endpoints
       description: Returns a JSON list of disqualified endpoints for a given service ID.
       operationId: 3disqualifiedEndpoints
@@ -497,6 +514,28 @@ paths:
                     message: 'invalid service ID: no apps matched the request for service: earth'
 components:
   parameters:
+    TargetServiceIdParam:
+      name: Target-Service-Id
+      in: header
+      required: false
+      description: 'The service ID to route the request to (required for local PATH instance)
+
+
+        **Required when using:**
+
+        - `http://localhost:3069` (local PATH instance)
+
+
+        **Not required when using:**
+
+        - `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)
+
+
+        When using subdomain-based URLs, the service ID is automatically determined from the subdomain.
+
+        '
+      schema:
+        type: string
     PortalApplicationIdParam:
       name: Portal-Application-ID
       in: header
@@ -544,25 +583,3 @@ components:
       schema:
         type: string
       example: your-api-key
-    TargetServiceIdParam:
-      name: Target-Service-Id
-      in: header
-      required: false
-      description: 'The service ID to route the request to (required for local PATH instance)
-
-
-        **Required when using:**
-
-        - `http://localhost:3069` (local PATH instance)
-
-
-        **Not required when using:**
-
-        - `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)
-
-
-        When using subdomain-based URLs, the service ID is automatically determined from the subdomain.
-
-        '
-      schema:
-        type: string

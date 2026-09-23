@@ -1,9 +1,8 @@
 {
   "provider": "pokt",
   "sources": [
-    "pokt-api-api-openapi.yml",
-    "pokt-msg-api-openapi.yml",
-    "pokt-query-api-openapi.yml"
+    "_original/path_openapi.yaml",
+    "_original/poktroll_openapi.json"
   ],
   "outputs": [
     "pokt-api-api-openapi.yml",
@@ -13,6 +12,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "path_openapi.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "poktroll_openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/poktroll_openapi.yaml: archived document superseded by a larger archived document",
+    "pokt-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pokt-msg-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pokt-query-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

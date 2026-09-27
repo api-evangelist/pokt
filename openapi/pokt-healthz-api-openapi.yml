@@ -1,0 +1,113 @@
+openapi: 3.2.0
+info:
+  title: PATH - Path API & Toolkit Harness Healthz API
+  description: PATH (Path API & Toolkit Harness) is an open source framework for enabling access to a decentralized supply network. It provides various tools and libraries to streamline the integration and interaction with decentralized protocols.
+  version: 1.0.0
+  contact:
+    name: Grove Engineering
+    email: engineering@grove.city
+servers:
+- url: https://{serviceId}.rpc.grove.city
+  description: Production PATH URL with service-specific subdomain
+  variables:
+    serviceId:
+      default: eth
+      description: The service ID that determines the subdomain
+      enum:
+      - arb-one
+      - arb-sepolia-testnet
+      - avax
+      - avax-dfk
+      - base
+      - base-sepolia-testnet
+      - bera
+      - bitcoin
+      - blast
+      - boba
+      - bsc
+      - celo
+      - eth
+      - eth-holesky-testnet
+      - eth-sepolia-testnet
+      - fantom
+      - fraxtal
+      - fuse
+      - gnosis
+      - harmony
+      - ink
+      - iotex
+      - kaia
+      - kava
+      - linea
+      - mantle
+      - metis
+      - moonbeam
+      - moonriver
+      - near
+      - oasys
+      - op
+      - op-sepolia-testnet
+      - opbnb
+      - pocket
+      - poly
+      - poly-amoy-testnet
+      - poly-zkevm
+      - radix
+      - scroll
+      - sei
+      - sonic
+      - sui
+      - taiko
+      - taiko-hekla-testnet
+      - tron
+      - xrplevm
+      - xrplevm-testnet
+      - zklink-nova
+      - zksync-era
+- url: http://localhost:3069
+  description: Local PATH instance
+security:
+- ApiKeyAuth: []
+tags:
+- name: Healthz
+paths:
+  /healthz:
+    get:
+      tags:
+      - Healthz
+      summary: Health Check
+      description: Returns a JSON health check response indicating the ready status of PATH
+      operationId: 2healthCheck
+      security: []
+      responses:
+        '200':
+          description: Health check successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  message:
+                    type: string
+                    example: PATH is up and running
+                  version:
+                    type: string
+                    example: 1.0.0
+                  readyStates:
+                    type: object
+                    additionalProperties:
+                      type: boolean
+                    example:
+                      endpoint-hydrator: true
+                      pokt-shannon: true
+                  configuredServiceIDs:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - eth
+                    - poly
+                    - avax

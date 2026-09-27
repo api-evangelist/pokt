@@ -5,19 +5,30 @@
     "_original/poktroll_openapi.json"
   ],
   "outputs": [
-    "pokt-api-api-openapi.yml",
+    "pokt-disqualified-endpoints-api-openapi.yml",
+    "pokt-healthz-api-openapi.yml",
+    "pokt-path-path-api-toolkit-harness-api-openapi.yml",
     "pokt-msg-api-openapi.yml",
     "pokt-query-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
     "1 archived document(s) dropped as subsets of other archived documents",
     "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "path_openapi.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "path_openapi.yaml: tagged paths POST /v1 -> PATH Path API & Toolkit Harness",
+    "path_openapi.yaml: tagged paths GET /healthz -> Healthz",
+    "path_openapi.yaml: tagged paths GET /disqualified_endpoints -> Disqualified Endpoints",
+    "path_openapi.yaml: declared missing tag: Disqualified Endpoints",
+    "path_openapi.yaml: declared missing tag: Healthz",
+    "path_openapi.yaml: declared missing tag: PATH Path API & Toolkit Harness",
     "poktroll_openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: pokt-api-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 7 total)"
   ],
   "skipped": [
     "_original/poktroll_openapi.yaml: archived document superseded by a larger archived document",

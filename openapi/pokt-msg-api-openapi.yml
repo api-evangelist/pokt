@@ -967,413 +967,9 @@ paths:
         required: true
 components:
   schemas:
-    pocket.migration.MorseAccountState:
-      type: object
-      title: 'MorseAccountState
-
-        - Onchain representation of all account state to be migrated from Morse
-
-        - NEVER persisted onchain
-
-        - Dependency of the MsgImportMorseClaimableAccount handler
-
-        - Main purpose: exposes #GetHash() for verifying integrity of all MorseClaimableAccounts'
-      properties:
-        accounts:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.migration.MorseClaimableAccount'
-    pocket.tokenomics.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type to update all params at once.
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          description: params defines the tokenomics parameters to update.
-          $ref: '#/components/schemas/pocket.tokenomics.Params'
-    pocket.gateway.MsgStakeGateway:
-      type: object
-      properties:
-        address:
-          type: string
-          title: The Bech32 address of the gateway
-        stake:
-          title: The total amount of uPOKT the gateway is staking. Must be ≥ to the current amount that the gateway has staked (if any)
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.migration.MsgImportMorseClaimableAccountsResponse:
-      description: 'MsgImportMorseClaimableAccountsResponse is returned from MsgImportMorseClaimableAccounts.
-
-
-        - Indicates the canonical hash of the imported MorseAccountState
-
-        - Reports the number of claimable accounts imported
-
-
-        Next free index: 3'
-      type: object
-    pocket.migration.MsgRecoverMorseAccount:
-      description: '- Execute a one-time minting of tokens on Shannon based on tokens owned by the given Morse account
-
-        - Credit the minted tokens to the balance of the given Shannon account
-
-        - Migrate unclaimable staked and liquid Morse tokens as liquid Shannon tokens
-
-
-        - MAY ONLY be executed by the authority
-
-        - ONLY intended for use on accounts with invalid addresses and/or known lost private keys
-
-
-        Next free index: 4'
-      type: object
-      title: 'MsgRecoverMorseAccount is used to:'
-      properties:
-        authority:
-          description: 'The bech32-encoded address of the migration module authority account ("gov" module address by default).
-
-            ONLY the authority, or its delegates, MAY recover Morse recoverable accounts.'
-          type: string
-        morse_src_address:
-          type: string
-          title: "EITHER:\n- The hex-encoded address of the recoverable Morse account whose stake(s) and/or balance(s) will be recovered.\n  This address MAY be invalid but NEVER empty.\n  E.g.: 00f9900606fa3d5c9179fc0c8513078a53a2073e\n- The name of a Morse module account whose balance will be recovered.\n  E.g. \"dao\" or \"fee-collector\""
-        shannon_dest_address:
-          description: 'The bech32-encoded address of the Shannon account to which the Morse account''s stake(s) and/or
-
-            balance(s) will be minted (recovered) as liquid Shannon tokens.'
-          type: string
-    pocket.shared.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type.
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          description: 'NOTE: All parameters must be supplied.'
-          $ref: '#/components/schemas/pocket.shared.Params'
-    pocket.tokenomics.MsgUpdateParam:
-      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
-      type: object
-      properties:
-        as_float:
-          type: number
-          format: double
-        as_mint_allocation_percentages:
-          $ref: '#/components/schemas/pocket.tokenomics.MintAllocationPercentages'
-        as_mint_equals_burn_claim_distribution:
-          $ref: '#/components/schemas/pocket.tokenomics.MintEqualsBurnClaimDistribution'
-        as_string:
-          type: string
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        name:
-          type: string
-          title: The (name, as_type) tuple must match the corresponding name and type as specified in the `Params` message in `proof/params.proto.`
-    pocket.service.MsgUpdateParamResponse:
-      description: 'MsgUpdateParamResponse defines the response structure for executing a
-
-        MsgUpdateParam message after a single param update.'
-      type: object
-    pocket.session.SessionHeader:
-      description: 'SessionHeader is a lightweight header for a session that can be passed around.
-
-        It is the minimal amount of data required to hydrate & retrieve all data relevant to the session.'
-      type: object
-      properties:
-        application_address:
-          description: The Bech32 address of the application.
-          type: string
-        service_id:
-          type: string
-          title: The service id this session is for
-        session_end_block_height:
-          description: 'Note that`session_end_block_height` is a derivative of (`start` + `num_blocks_per_session`)
-
-            as governed by onchain params at the time of the session start.
-
-            It is stored as an additional field to simplify business logic in case
-
-            the number of blocks_per_session changes during the session.
-
-
-            The height at which this session ended, this is the last block of the session'
-          type: string
-          format: int64
-        session_id:
-          description: A unique pseudorandom ID for this session
-          type: string
-          title: 'NOTE: session_id can be derived from the above values using onchain but is included in the header for convenience'
-        session_start_block_height:
-          type: string
-          format: int64
-          title: The height at which this session started
-    pocket.gateway.MsgUpdateParamsResponse:
-      description: 'MsgUpdateParamsResponse defines the response structure for executing a
-
-        MsgUpdateParams message.'
-      type: object
-    pocket.shared.ConfigOptions:
-      description: "Enum to define configuration options\nTODO_RESEARCH: Should these be configs, SLAs or something else? There will be more discussion once we get closer to implementing onchain QoS.\n\n - UNKNOWN_CONFIG: Undefined config option\n - TIMEOUT: Timeout setting"
-      type: string
-      default: UNKNOWN_CONFIG
-      enum:
-      - UNKNOWN_CONFIG
-      - TIMEOUT
-    pocket.application.MsgUndelegateFromGatewayResponse:
-      type: object
-    pocket.gateway.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type.
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          description: 'params defines the x/gateway parameters to update.
-
-            NOTE: All parameters must be supplied.'
-          $ref: '#/components/schemas/pocket.gateway.Params'
-    pocket.migration.MsgClaimMorseApplicationResponse:
-      description: 'MsgClaimMorseApplicationResponse is returned from MsgClaimMorseApplication.
-
-
-        - Indicates the morse_src_address of the claimed account
-
-        - Reports the unstaked balance claimed, application stake, and commit height
-
-        - Returns the staked application
-
-
-        Next free index: 6'
-      type: object
-    pocket.proof.MsgSubmitProof:
-      type: object
-      properties:
-        proof:
-          type: string
-          format: byte
-          title: serialized version of *smt.SparseCompactMerkleClosestProof
-        session_header:
-          $ref: '#/components/schemas/pocket.session.SessionHeader'
-        supplier_operator_address:
-          type: string
-    pocket.application.MsgUndelegateFromGateway:
-      type: object
-      properties:
-        app_address:
-          description: The Bech32 address of the application.
-          type: string
-        gateway_address:
-          description: The Bech32 address of the gateway the application wants to undelegate from.
-          type: string
-    pocket.application.MsgDelegateToGateway:
-      type: object
-      properties:
-        app_address:
-          description: The Bech32 address of the application.
-          type: string
-        gateway_address:
-          description: The Bech32 address of the gateway the application wants to delegate to.
-          type: string
     pocket.tokenomics.MsgUpdateParamResponse:
       description: MsgUpdateParamResponse defines the response structure for executing a MsgUpdateParam message after a single param update.
       type: object
-    pocket.gateway.MsgStakeGatewayResponse:
-      type: object
-    pocket.supplier.MsgUnstakeSupplierResponse:
-      type: object
-    pocket.application.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type.
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          description: 'params defines the x/application parameters to update.
-
-            NOTE: All parameters must be supplied.'
-          $ref: '#/components/schemas/pocket.application.Params'
-    pocket.session.MsgUpdateParam:
-      type: object
-      properties:
-        as_uint64:
-          type: string
-          format: uint64
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        name:
-          type: string
-    pocket.application.MsgTransferApplicationResponse:
-      type: object
-    pocket.shared.ServiceRevenueShare:
-      type: object
-      title: ServiceRevenueShare message to hold revenue share configuration details
-      properties:
-        address:
-          type: string
-          title: The Bech32 address of the revenue share recipient
-        rev_share_percentage:
-          type: string
-          format: uint64
-          title: The percentage of revenue share the recipient will receive
-    pocket.proof.MsgUpdateParamResponse:
-      description: 'MsgUpdateParamResponse defines the response structure for executing a
-
-        MsgUpdateParam message after a single param update.'
-      type: object
-    pocket.application.MsgUpdateParamsResponse:
-      description: 'MsgUpdateParamsResponse defines the response structure for executing a
-
-        MsgUpdateParams message.'
-      type: object
-    pocket.migration.MsgImportMorseClaimableAccounts:
-      description: '- Create the on-chain MorseClaimableAccounts ONLY AND EXACTLY ONCE (per network / re-genesis)
-
-        - Import Morse account state derived from Morse state export
-
-
-        Next free index: 4'
-      type: object
-      title: 'MsgImportMorseClaimableAccounts is used to:'
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        morse_account_state:
-          title: Account state derived from Morse state export and `pocketd tx migration collect-morse-accounts`
-          $ref: '#/components/schemas/pocket.migration.MorseAccountState'
-        morse_account_state_hash:
-          description: "Verification (high-level):\n  $ pocketd tx migration collect-morse-accounts $<(pocket util export-genesis-for-reset)\n\nAdditional docs:\n  - pocket util export-genesis-for-migration --help\n  - pocketd tx migration collect-morse-accounts --help"
-          type: string
-          format: byte
-          title: 'Validates the morse_account_state sha256 hash:
-
-            - Transaction fails if hash doesn''t match on-chain computation
-
-            - Off-chain social consensus should be reached before verification'
-    pocket.shared.Metadata:
-      description: 'Metadata message to hold additional metadata for a service.
-
-        The raw bytes are stored on-chain and will be base64 encoded in JSON representations.'
-      type: object
-      properties:
-        experimental_api_specs:
-          description: 'EXPERIMENTAL: Serialized API spec limited to 100 KiB when decoded.
-
-            TODO(@future): support dedicated openapi_ / openrpc_ fields once formats stabilize.'
-          type: string
-          format: byte
-    pocket.proof.MsgCreateClaimResponse:
-      type: object
-    pocket.gateway.MsgUpdateParam:
-      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
-      type: object
-      properties:
-        as_coin:
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        name:
-          type: string
-    pocket.gateway.MsgUpdateParamResponse:
-      type: object
-    google.rpc.Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/google.protobuf.Any'
-        message:
-          type: string
-    pocket.application.MsgStakeApplication:
-      type: object
-      properties:
-        address:
-          description: The Bech32 address of the application.
-          type: string
-        services:
-          type: array
-          title: The list of services this application is staked to request service for
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.ApplicationServiceConfig'
-        stake:
-          title: The total amount of uPOKT the application has staked. Must be ≥ to the current amount that the application has staked (if any)
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.service.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        add_service_fee:
-          description: 'The amount of uPOKT required to add a new service.
-
-            This will be deducted from the signer''s account balance,
-
-            and transferred to the pocket network foundation.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        target_num_relays:
-          description: 'target_num_relays is the target for the EMA of the number of relays per session.
-
-            Per service, onchain relay mining difficulty will be adjusted to maintain this target.'
-          type: string
-          format: uint64
-    pocket.supplier.MsgUpdateParamResponse:
-      type: object
-    pocket.migration.MsgClaimMorseApplication:
-      description: '- Execute a claim (one-time minting of tokens on Shannon) of total tokens owned by a Morse account
-
-        - Mint claimed tokens to the given Shannon account
-
-        - Stake that Shannon account as an application for the given service_config and same stake amount
-
-
-        Next free index: 7'
-      type: object
-      title: 'MsgClaimMorseApplication is used to:'
-      properties:
-        morse_public_key:
-          description: The ed25519 public key of the morse account with morse_src_address.
-          type: string
-          format: byte
-        morse_signature:
-          type: string
-          format: byte
-          title: 'The hex-encoded signature, by the Morse account, of this message (where this field is nil).
-
-            I.e.: morse_signature = private_key.sign(marshal(MsgClaimMorseAccount{morse_signature: nil, ...}))'
-        service_config:
-          description: 'The services this application is staked to request service for.
-
-            NOTE: This is not a repeated field, as in MsgStakeApplication,
-
-            because an application can only be staked for one service.'
-          $ref: '#/components/schemas/pocket.shared.ApplicationServiceConfig'
-        shannon_dest_address:
-          description: 'The bech32-encoded address of the Shannon account to which the claimed tokens
-
-            will be minted and from which the application will be staked.'
-          type: string
-        shannon_signing_address:
-          description: 'The bech32-encoded address of the Shannon account which is signing for this message.
-
-            This account is liable for any fees incurred by violating the constraints of Morse
-
-            account/actor claim message fee waiving; the tx contains ONE OR MORE Morse account/actor
-
-            claim messages AND has EXACTLY ONE signer.'
-          type: string
     pocket.migration.Params:
       description: 'Params defines the parameters for the module.
 
@@ -1410,135 +1006,6 @@ components:
             - Contain at least one Morse account/actor claim messages
 
             - Do not contain any other messages other than Morse account/actor claim messages'
-    pocket.gateway.MsgUnstakeGatewayResponse:
-      type: object
-    pocket.tokenomics.MsgUpdateParamsResponse:
-      description: MsgUpdateParamsResponse defines the response structure for executing a MsgUpdateParams message.
-      type: object
-    pocket.supplier.MsgUpdateParam:
-      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
-      type: object
-      properties:
-        as_coin:
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        name:
-          type: string
-    pocket.session.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type.
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          description: 'params defines the x/session parameters to update.
-
-            NOTE: All parameters must be supplied.'
-          $ref: '#/components/schemas/pocket.session.Params'
-    pocket.application.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        max_delegated_gateways:
-          description: 'max_delegated_gateways defines the maximum number of gateways that a single
-
-            application can delegate to. This is used to prevent performance issues
-
-            in case the relay ring signature becomes too large.'
-          type: string
-          format: uint64
-        min_stake:
-          description: min_stake is the minimum stake in upokt that an application must have to remain staked.
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.migration.MsgUpdateParamsResponse:
-      description: 'MsgUpdateParamsResponse defines the response structure for executing a MsgUpdateParams message.
-
-
-        - Empty response on success'
-      type: object
-    pocket.supplier.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type.
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          description: 'params defines the x/supplier parameters to update.
-
-            NOTE: All parameters must be supplied.'
-          $ref: '#/components/schemas/pocket.supplier.Params'
-    pocket.service.MsgUpdateParamsResponse:
-      description: 'MsgUpdateParamsResponse defines the response structure for executing a
-
-        MsgUpdateParams message.'
-      type: object
-    pocket.session.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        num_suppliers_per_session:
-          description: 'num_suppliers_per_session is the maximum number of suppliers per session
-
-            (application:supplier pair for a given session number).'
-          type: string
-          format: uint64
-    pocket.tokenomics.MintEqualsBurnClaimDistribution:
-      description: 'MintEqualsBurnClaimDistribution captures the distribution of claimable tokens.
-
-        The sum of all tokens being burnt from the application''s stake must equal 1.
-
-        GlobalMintEqualsBurnTLM: Only used by the GlobalMintEqualsBurnTLM at the end of claim settlement.'
-      type: object
-      properties:
-        application:
-          description: application - % of claimable tokens sent to the application account address.
-          type: number
-          format: double
-        dao:
-          description: dao - % of claimable tokens sent to the DAO reward address.
-          type: number
-          format: double
-        proposer:
-          description: 'TODO_TECHDEBT: Rename "proposer" to "validators" to reflect the work done in #1753.
-
-            This will span all references to the term "proposer" across documentation, functions, protobufs, variables, tooling, etc..
-
-
-            proposer - % of claimable tokens sent to the block proposer (i.e. validator0) account address.'
-          type: number
-          format: double
-        source_owner:
-          description: source_owner - % of claimable tokens sent to the service source owner account address.
-          type: number
-          format: double
-        supplier:
-          description: supplier - % of claimable tokens sent to the block supplier account address.
-          type: number
-          format: double
-    pocket.migration.MsgUpdateParams:
-      description: 'MsgUpdateParams is the Msg/UpdateParams request type.
-
-
-        - Used for updating the migration module parameters via governance
-
-        - All parameters must be supplied
-
-
-        Next free index: 3'
-      type: object
-      properties:
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        params:
-          title: 'Module parameters to update
-
-            NOTE: All parameters must be supplied'
-          $ref: '#/components/schemas/pocket.migration.Params'
     pocket.shared.Service:
       type: object
       title: Service message to encapsulate unique and semantic identifiers for a service on the network
@@ -1577,97 +1044,140 @@ components:
 
             The Bech32 address of the service owner / creator'
           type: string
+    pocket.shared.ApplicationServiceConfig:
+      type: object
+      title: ApplicationServiceConfig holds the service configuration the application stakes for
+      properties:
+        service_id:
+          type: string
+          title: The Service ID for which the application is configured
+    pocket.tokenomics.MsgUpdateParamsResponse:
+      description: MsgUpdateParamsResponse defines the response structure for executing a MsgUpdateParams message.
+      type: object
+    google.rpc.Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/google.protobuf.Any'
+        message:
+          type: string
+    pocket.application.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        max_delegated_gateways:
+          description: 'max_delegated_gateways defines the maximum number of gateways that a single
+
+            application can delegate to. This is used to prevent performance issues
+
+            in case the relay ring signature becomes too large.'
+          type: string
+          format: uint64
+        min_stake:
+          description: min_stake is the minimum stake in upokt that an application must have to remain staked.
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.service.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        add_service_fee:
+          description: 'The amount of uPOKT required to add a new service.
+
+            This will be deducted from the signer''s account balance,
+
+            and transferred to the pocket network foundation.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        target_num_relays:
+          description: 'target_num_relays is the target for the EMA of the number of relays per session.
+
+            Per service, onchain relay mining difficulty will be adjusted to maintain this target.'
+          type: string
+          format: uint64
+    pocket.migration.MsgImportMorseClaimableAccountsResponse:
+      description: 'MsgImportMorseClaimableAccountsResponse is returned from MsgImportMorseClaimableAccounts.
+
+
+        - Indicates the canonical hash of the imported MorseAccountState
+
+        - Reports the number of claimable accounts imported
+
+
+        Next free index: 3'
+      type: object
+    pocket.gateway.MsgUnstakeGateway:
+      type: object
+      properties:
+        address:
+          type: string
+          title: The Bech32 address of the gateway
+    pocket.session.MsgUpdateParam:
+      type: object
+      properties:
+        as_uint64:
+          type: string
+          format: uint64
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        name:
+          type: string
+    pocket.application.MsgUndelegateFromGateway:
+      type: object
+      properties:
+        app_address:
+          description: The Bech32 address of the application.
+          type: string
+        gateway_address:
+          description: The Bech32 address of the gateway the application wants to undelegate from.
+          type: string
     pocket.session.MsgUpdateParamsResponse:
       description: 'MsgUpdateParamsResponse defines the response structure for executing a
 
         MsgUpdateParams message.'
       type: object
-    pocket.proof.MsgCreateClaim:
+    pocket.supplier.MsgStakeSupplierResponse:
+      type: object
+    pocket.application.MsgStakeApplicationResponse:
+      type: object
+    pocket.service.MsgUpdateParamsResponse:
+      description: 'MsgUpdateParamsResponse defines the response structure for executing a
+
+        MsgUpdateParams message.'
+      type: object
+    pocket.service.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type.
       type: object
       properties:
-        root_hash:
-          type: string
-          format: byte
-          title: root returned from smt.SMST#Root()
-        session_header:
-          $ref: '#/components/schemas/pocket.session.SessionHeader'
-        supplier_operator_address:
-          type: string
-    pocket.tokenomics.MintAllocationPercentages:
-      description: 'MintAllocationPercentages captures the distribution of newly minted tokens.
-
-        The sum of all new tokens minted must equal 1.
-
-        GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.
-
-        TODO_DISTANT_FUTURE: Remove this once global inflation is disabled in perpetuity.'
-      type: object
-      properties:
-        application:
-          description: application - % of newley minted tokens sent to the application account address.
-          type: number
-          format: double
-        dao:
-          description: dao - % of newley minted tokens sent to the DAO reward address.
-          type: number
-          format: double
-        proposer:
-          description: proposer - % of newley minted tokens sent to the block proposer (i.e. validator0 account address.
-          type: number
-          format: double
-        source_owner:
-          description: source_owner - % of newley minted tokens sent to the service source owner account address.
-          type: number
-          format: double
-        supplier:
-          description: supplier - % of newley minted tokens sent to the block supplier account address.
-          type: number
-          format: double
-    pocket.shared.MsgUpdateParam:
-      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
-      type: object
-      properties:
-        as_bytes:
-          type: string
-          format: byte
-        as_string:
-          type: string
-        as_uint64:
-          type: string
-          format: uint64
         authority:
           description: authority is the address that controls the module (defaults to x/gov unless overwritten).
           type: string
-        name:
-          type: string
-    pocket.migration.MsgRecoverMorseAccountResponse:
-      description: 'MsgRecoverMorseAccountResponse is returned from MsgRecoverMorseAccount.
+        params:
+          description: 'params defines the x/service parameters to update.
 
-
-        - Indicates the morse_src_address of the recovered account
-
-        - Reports the sum of any actor stakes and unstaked balance recovered
-
-        - Reports the session end height in which the recovery was committed
-
-        - Returns the destination Shannon address
-
-
-        Next free index: 5'
+            NOTE: All parameters must be supplied.'
+          $ref: '#/components/schemas/pocket.service.Params'
+    pocket.shared.SupplierEndpoint:
       type: object
-    pocket.application.MsgUpdateParam:
-      type: object
+      title: SupplierEndpoint message to hold service configuration details
       properties:
-        as_coin:
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        as_uint64:
+        configs:
+          type: array
+          title: Additional configuration options for the endpoint
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ConfigOption'
+        rpc_type:
+          title: Type of RPC exposed on the url above
+          $ref: '#/components/schemas/pocket.shared.RPCType'
+        url:
           type: string
-          format: uint64
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        name:
-          type: string
+          title: URL of the endpoint
     pocket.migration.MorseClaimableAccount:
       description: 'Next free index: 11'
       type: object
@@ -1717,168 +1227,21 @@ components:
             It reflects the "unbonding completion time" of the Morse node/supplier, but is called "unstaking time" to comply with necessary Morse data structures.'
           type: string
           format: date-time
-    pocket.tokenomics.Params:
-      description: Params defines the parameters for the tokenomics module.
+    pocket.migration.MsgUpdateParamsResponse:
+      description: 'MsgUpdateParamsResponse defines the response structure for executing a MsgUpdateParams message.
+
+
+        - Empty response on success'
       type: object
-      properties:
-        dao_reward_address:
-          description: 'dao_reward_address is where the DAO''s portion of claims submitted are distributed.
-
-
-            Bech32 cosmos address'
-          type: string
-        global_inflation_per_claim:
-          description: 'global_inflation_per_claim is the percentage of a claim''s claimable uPOKT amount to be minted on settlement.
-
-            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
-          type: number
-          format: double
-        mint_allocation_percentages:
-          description: 'mint_allocation_percentages represents the distribution of newly minted tokens.
-
-            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
-          $ref: '#/components/schemas/pocket.tokenomics.MintAllocationPercentages'
-        mint_equals_burn_claim_distribution:
-          description: 'mint_equals_burn_claim_distribution controls how the settlement amount is distributed
-
-            when global inflation is disabled (global_inflation_per_claim = 0).
-
-            MintEqualsBurnTLM: Only used by the MintEqualsBurnTLM at the end of claim settlement.'
-          $ref: '#/components/schemas/pocket.tokenomics.MintEqualsBurnClaimDistribution'
-    pocket.application.MsgUnstakeApplication:
+    pocket.application.MsgUpdateParamResponse:
       type: object
-      properties:
-        address:
-          type: string
-    pocket.shared.Params:
-      description: Params defines the parameters for the module.
+    pocket.proof.MsgCreateClaimResponse:
       type: object
-      properties:
-        application_unbonding_period_sessions:
-          description: 'application_unbonding_period_sessions is the number of sessions that an application must wait after
+    pocket.service.MsgUpdateParamResponse:
+      description: 'MsgUpdateParamResponse defines the response structure for executing a
 
-            unstaking before their staked assets are moved to their account balance.
-
-            Onchain business logic requires, and ensures, that the corresponding block count of the
-
-            application unbonding period will exceed the end of its corresponding proof window close height.'
-          type: string
-          format: uint64
-        claim_window_close_offset_blocks:
-          description: 'claim_window_close_offset_blocks is the number of blocks after the claim window
-
-            open height, at which the claim window closes.'
-          type: string
-          format: uint64
-        claim_window_open_offset_blocks:
-          description: 'claim_window_open_offset_blocks is the number of blocks after the session grace
-
-            period height, at which the claim window opens.'
-          type: string
-          format: uint64
-        compute_unit_cost_granularity:
-          description: "compute_unit_cost_granularity is the fraction of the base unit (uPOKT) used\nto represent the smallest price of a single compute unit.\ncompute_unit_cost_granularity defines the smallest fraction of uPOKT that can represent\nthe cost of a single compute unit.\n\nIt acts as a denominator in the formula:\n\n  compute_unit_cost_in_uPOKT = compute_units_to_tokens_multiplier / compute_unit_cost_granularity\n\nThis enables high-precision pricing of compute units using integer math.\nFor example:\n\n+-------------------------------+---------------------------------------------+\n| compute_unit_cost_granularity | compute_units_to_tokens_multiplier unit     |\n+-------------------------------+---------------------------------------------+\n| 1                             | uPOKT                                       |\n| 1_000                         | nPOKT (nanoPOKT, 1e-3 uPOKT)                |\n| 1_000_000                     | pPOKT (picoPOKT, 1e-6 uPOKT)                |\n+-------------------------------+---------------------------------------------+\n\n⚠️ Note: This value is a configurable global network parameter (not a constant).\nIt must be a power of 10, allowing precise denomination shifts without affecting\nongoing sessions. This prevents sessions from settling using parameters that\nwere not in effect during their creation."
-          type: string
-          format: uint64
-        compute_units_to_tokens_multiplier:
-          description: 'The amount of tokens that a compute unit should translate to when settling a session.
-
-            It is denominated in fractional uPOKT (1/compute_unit_cost_granularity)
-
-            DEV_NOTE: This used to be under x/tokenomics but has been moved here to avoid cyclic dependencies.'
-          type: string
-          format: uint64
-        gateway_unbonding_period_sessions:
-          description: 'gateway_unbonding_period_sessions is the number of sessions that a gateway must wait after
-
-            unstaking before their staked assets are moved to its account balance.'
-          type: string
-          format: uint64
-        grace_period_end_offset_blocks:
-          description: 'grace_period_end_offset_blocks is the number of blocks, after the session end height,
-
-            during which the supplier can still service payable relays.
-
-            Suppliers will need to recreate a claim for the previous session (if already created) to
-
-            get paid for the additional relays.'
-          type: string
-          format: uint64
-        num_blocks_per_session:
-          description: num_blocks_per_session is the number of blocks between the session start & end heights.
-          type: string
-          format: uint64
-        proof_window_close_offset_blocks:
-          description: 'proof_window_close_offset_blocks is the number of blocks after the proof window
-
-            open height, at which the proof window closes.'
-          type: string
-          format: uint64
-        proof_window_open_offset_blocks:
-          description: 'proof_window_open_offset_blocks is the number of blocks after the claim window
-
-            close height, at which the proof window opens.'
-          type: string
-          format: uint64
-        supplier_unbonding_period_sessions:
-          description: 'supplier_unbonding_period_sessions is the number of sessions that a supplier must wait after
-
-            unstaking before their staked assets are moved to their account balance.
-
-            Onchain business logic requires, and ensures, that the corresponding block count of the unbonding
-
-            period will exceed the end of any active claim & proof lifecycles.'
-          type: string
-          format: uint64
-    pocket.proof.MsgUpdateParam:
-      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
+        MsgUpdateParam message after a single param update.'
       type: object
-      properties:
-        as_bytes:
-          type: string
-          format: byte
-        as_coin:
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        as_float:
-          type: number
-          format: double
-        authority:
-          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
-          type: string
-        name:
-          type: string
-          title: 'The (name, as_type) tuple must match the corresponding name and type as
-
-            specified in the `Params`` message in `proof/params.proto.`'
-    pocket.application.MsgStakeApplicationResponse:
-      type: object
-    pocket.gateway.MsgUnstakeGateway:
-      type: object
-      properties:
-        address:
-          type: string
-          title: The Bech32 address of the gateway
-    pocket.supplier.MsgUnstakeSupplier:
-      type: object
-      properties:
-        operator_address:
-          type: string
-          title: The Bech32 address of the operator (i.e. provider, non-custodial)
-        signer:
-          type: string
-          title: The Bech32 address of the message signer (i.e. owner or operator)
-    pocket.shared.RPCType:
-      description: "- UNKNOWN_RPC: Undefined RPC type\n - GRPC: gRPC\n - WEBSOCKET: WebSocket\n - JSON_RPC: JSON-RPC\n - REST: REST\n - COMET_BFT: CometBFT (REST + JSON-RPC)"
-      type: string
-      title: Enum to define RPC types
-      default: UNKNOWN_RPC
-      enum:
-      - UNKNOWN_RPC
-      - GRPC
-      - WEBSOCKET
-      - JSON_RPC
-      - REST
-      - COMET_BFT
     pocket.application.MsgTransferApplication:
       type: object
       properties:
@@ -1886,105 +1249,112 @@ components:
           type: string
         source_address:
           type: string
-    pocket.application.MsgUnstakeApplicationResponse:
-      type: object
-    cosmos.base.v1beta1.Coin:
-      description: 'Coin defines a token with a denomination and an amount.
-
-
-        NOTE: The amount field is an Int which implements the custom method
-
-        signatures required by gogoproto.'
-      type: object
-      properties:
-        amount:
-          type: string
-        denom:
-          type: string
-    pocket.shared.SupplierServiceConfig:
-      type: object
-      title: SupplierServiceConfig holds the service configuration the supplier stakes for
-      properties:
-        endpoints:
-          type: array
-          title: List of endpoints for the service
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.SupplierEndpoint'
-        rev_share:
-          type: array
-          title: List of revenue share configurations for the service
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.ServiceRevenueShare'
-        service_id:
-          type: string
-          title: The Service ID for which the supplier is configured
-    pocket.shared.MsgUpdateParamResponse:
-      description: 'MsgUpdateParamResponse defines the response structure for executing a
-
-        MsgUpdateParam message after a single param update.'
-      type: object
     pocket.shared.MsgUpdateParamsResponse:
       description: 'MsgUpdateParamsResponse defines the response structure for executing a
 
         MsgUpdateParams message.'
       type: object
-    pocket.application.MsgDelegateToGatewayResponse:
-      type: object
-    pocket.service.MsgUpdateParams:
-      description: MsgUpdateParams is the Msg/UpdateParams request type.
+    pocket.migration.MsgUpdateParams:
+      description: 'MsgUpdateParams is the Msg/UpdateParams request type.
+
+
+        - Used for updating the migration module parameters via governance
+
+        - All parameters must be supplied
+
+
+        Next free index: 3'
       type: object
       properties:
         authority:
           description: authority is the address that controls the module (defaults to x/gov unless overwritten).
           type: string
         params:
-          description: 'params defines the x/service parameters to update.
+          title: 'Module parameters to update
 
-            NOTE: All parameters must be supplied.'
-          $ref: '#/components/schemas/pocket.service.Params'
-    pocket.migration.MsgClaimMorseAccount:
-      description: '- Execute a claim (one-time minting of tokens on Shannon)
-
-        - Claim the balance of a given Morse account per on-chain MorseClaimableAccounts
-
-        - Mint claimed balance to the given Shannon account
-
-
-        NOTE:
-
-        - A transaction can contain ONE OR MORE Morse account/actor claim messages AND has EXACTLY ONE signer.
-
-        - The Shannon account specified must be the message signer
-
-        - Authz grants MAY be used to delegate claiming authority to other Shannon accounts'
+            NOTE: All parameters must be supplied'
+          $ref: '#/components/schemas/pocket.migration.Params'
+    pocket.shared.MsgUpdateParam:
+      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
       type: object
-      title: 'MsgClaimMorseAccount is used to:'
       properties:
-        morse_public_key:
-          description: The ed25519 public key of the morse account with morse_src_address.
+        as_bytes:
           type: string
           format: byte
-        morse_signature:
+        as_string:
           type: string
-          format: byte
-          title: 'The hex-encoded signature, by the Morse account, of this message (where this field is nil).
-
-            I.e.: morse_signature = private_key.sign(marshal(MsgClaimMorseAccount{morse_signature: nil, ...}))'
-        shannon_dest_address:
-          description: The bech32-encoded address of the Shannon account to which the claimed balance will be minted.
+        as_uint64:
           type: string
-        shannon_signing_address:
-          description: 'The bech32-encoded address of the Shannon account which is signing for this message.
-
-            This account is liable for any fees incurred by violating the constraints of Morse
-
-            account/actor claim message fee waiving.'
+          format: uint64
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
           type: string
-    pocket.proof.MsgSubmitProofResponse:
+        name:
+          type: string
+    pocket.application.MsgUpdateParam:
       type: object
-    pocket.supplier.MsgStakeSupplierResponse:
+      properties:
+        as_coin:
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        as_uint64:
+          type: string
+          format: uint64
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        name:
+          type: string
+    pocket.gateway.MsgUpdateParam:
+      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
+      type: object
+      properties:
+        as_coin:
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        name:
+          type: string
+    pocket.application.MsgStakeApplication:
+      type: object
+      properties:
+        address:
+          description: The Bech32 address of the application.
+          type: string
+        services:
+          type: array
+          title: The list of services this application is staked to request service for
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ApplicationServiceConfig'
+        stake:
+          title: The total amount of uPOKT the application has staked. Must be ≥ to the current amount that the application has staked (if any)
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.migration.MsgClaimMorseAccountResponse:
+      description: 'MsgClaimMorseAccountResponse is returned from MsgClaimMorseAccount.
+
+
+        - Indicates the morse_src_address of the claimed account
+
+        - Reports the claimed balance and commit height
+
+
+        Next free index: 4'
+      type: object
+    pocket.migration.MsgClaimMorseSupplierResponse:
+      description: 'MsgClaimMorseSupplierResponse is returned from MsgClaimMorseSupplier.
+
+
+        - Indicates the morse_operator_address of the claimed account
+
+        - Reports the unstaked balance claimed, session end height, and staked supplier
+
+        - Includes claim signer type and signer address
+
+
+        Next free index: 10'
+      type: object
+    pocket.proof.MsgSubmitProofResponse:
       type: object
     pocket.gateway.Params:
       description: Params defines the parameters for the module.
@@ -1993,11 +1363,86 @@ components:
         min_stake:
           description: min_stake is the minimum amount of uPOKT that a gateway must stake.
           $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.migration.MsgImportMorseClaimableAccounts:
+      description: '- Create the on-chain MorseClaimableAccounts ONLY AND EXACTLY ONCE (per network / re-genesis)
+
+        - Import Morse account state derived from Morse state export
+
+
+        Next free index: 4'
+      type: object
+      title: 'MsgImportMorseClaimableAccounts is used to:'
+      properties:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        morse_account_state:
+          title: Account state derived from Morse state export and `pocketd tx migration collect-morse-accounts`
+          $ref: '#/components/schemas/pocket.migration.MorseAccountState'
+        morse_account_state_hash:
+          description: "Verification (high-level):\n  $ pocketd tx migration collect-morse-accounts $<(pocket util export-genesis-for-reset)\n\nAdditional docs:\n  - pocket util export-genesis-for-migration --help\n  - pocketd tx migration collect-morse-accounts --help"
+          type: string
+          format: byte
+          title: 'Validates the morse_account_state sha256 hash:
+
+            - Transaction fails if hash doesn''t match on-chain computation
+
+            - Off-chain social consensus should be reached before verification'
+    pocket.shared.ConfigOptions:
+      description: "Enum to define configuration options\nTODO_RESEARCH: Should these be configs, SLAs or something else? There will be more discussion once we get closer to implementing onchain QoS.\n\n - UNKNOWN_CONFIG: Undefined config option\n - TIMEOUT: Timeout setting"
+      type: string
+      default: UNKNOWN_CONFIG
+      enum:
+      - UNKNOWN_CONFIG
+      - TIMEOUT
+    pocket.shared.MsgUpdateParamResponse:
+      description: 'MsgUpdateParamResponse defines the response structure for executing a
+
+        MsgUpdateParam message after a single param update.'
+      type: object
     pocket.proof.MsgUpdateParamsResponse:
       description: 'MsgUpdateParamsResponse defines the response structure for executing a
 
         MsgUpdateParams message.'
       type: object
+    pocket.supplier.MsgUnstakeSupplierResponse:
+      type: object
+    pocket.session.MsgUpdateParamResponse:
+      type: object
+    pocket.service.MsgUpdateParam:
+      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
+      type: object
+      properties:
+        as_coin:
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        as_uint64:
+          type: string
+          format: uint64
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        name:
+          type: string
+          title: 'The (name, as_type) tuple must match the corresponding name and type as
+
+            specified in the `Params` message in `proof/params.proto.`'
+    pocket.supplier.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        min_stake:
+          description: 'min_stake is the minimum amount of uPOKT that a supplier must stake to be
+
+            included in network sessions and remain staked.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        staking_fee:
+          description: staking_fee is the fee charged by the protocol for staking a supplier.
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.application.MsgUnstakeApplication:
+      type: object
+      properties:
+        address:
+          type: string
     pocket.migration.MsgClaimMorseSupplier:
       description: '- Execute a one-time minting of tokens on Shannon based on tokens owned by the given Morse account
 
@@ -2078,22 +1523,18 @@ components:
 
             - The morse_signature MUST correspond to morse_output_address.'
           type: boolean
-    pocket.shared.ApplicationServiceConfig:
-      type: object
-      title: ApplicationServiceConfig holds the service configuration the application stakes for
-      properties:
-        service_id:
-          type: string
-          title: The Service ID for which the application is configured
-    pocket.service.MsgUpdateParam:
+    pocket.proof.MsgUpdateParam:
       description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
       type: object
       properties:
+        as_bytes:
+          type: string
+          format: byte
         as_coin:
           $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        as_uint64:
-          type: string
-          format: uint64
+        as_float:
+          type: number
+          format: double
         authority:
           description: authority is the address that controls the module (defaults to x/gov unless overwritten).
           type: string
@@ -2101,23 +1542,261 @@ components:
           type: string
           title: 'The (name, as_type) tuple must match the corresponding name and type as
 
-            specified in the `Params` message in `proof/params.proto.`'
-    pocket.shared.SupplierEndpoint:
+            specified in the `Params`` message in `proof/params.proto.`'
+    pocket.proof.MsgUpdateParamResponse:
+      description: 'MsgUpdateParamResponse defines the response structure for executing a
+
+        MsgUpdateParam message after a single param update.'
       type: object
-      title: SupplierEndpoint message to hold service configuration details
+    pocket.application.MsgUndelegateFromGatewayResponse:
+      type: object
+    pocket.application.MsgUnstakeApplicationResponse:
+      type: object
+    pocket.application.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type.
+      type: object
       properties:
-        configs:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        params:
+          description: 'params defines the x/application parameters to update.
+
+            NOTE: All parameters must be supplied.'
+          $ref: '#/components/schemas/pocket.application.Params'
+    pocket.shared.RPCType:
+      description: "- UNKNOWN_RPC: Undefined RPC type\n - GRPC: gRPC\n - WEBSOCKET: WebSocket\n - JSON_RPC: JSON-RPC\n - REST: REST\n - COMET_BFT: CometBFT (REST + JSON-RPC)"
+      type: string
+      title: Enum to define RPC types
+      default: UNKNOWN_RPC
+      enum:
+      - UNKNOWN_RPC
+      - GRPC
+      - WEBSOCKET
+      - JSON_RPC
+      - REST
+      - COMET_BFT
+    pocket.supplier.MsgUpdateParamResponse:
+      type: object
+    pocket.supplier.MsgUpdateParamsResponse:
+      description: 'MsgUpdateParamsResponse defines the response structure for executing a
+
+        MsgUpdateParams message.'
+      type: object
+    pocket.gateway.MsgStakeGatewayResponse:
+      type: object
+    pocket.session.SessionHeader:
+      description: 'SessionHeader is a lightweight header for a session that can be passed around.
+
+        It is the minimal amount of data required to hydrate & retrieve all data relevant to the session.'
+      type: object
+      properties:
+        application_address:
+          description: The Bech32 address of the application.
+          type: string
+        service_id:
+          type: string
+          title: The service id this session is for
+        session_end_block_height:
+          description: 'Note that`session_end_block_height` is a derivative of (`start` + `num_blocks_per_session`)
+
+            as governed by onchain params at the time of the session start.
+
+            It is stored as an additional field to simplify business logic in case
+
+            the number of blocks_per_session changes during the session.
+
+
+            The height at which this session ended, this is the last block of the session'
+          type: string
+          format: int64
+        session_id:
+          description: A unique pseudorandom ID for this session
+          type: string
+          title: 'NOTE: session_id can be derived from the above values using onchain but is included in the header for convenience'
+        session_start_block_height:
+          type: string
+          format: int64
+          title: The height at which this session started
+    pocket.service.MsgAddService:
+      description: 'MsgAddService defines a message for adding a new message to the network.
+
+        Services can be added by any actor in the network making them truly
+
+        permissionless.'
+      type: object
+      properties:
+        owner_address:
+          description: The Bech32 address of the service owner.
+          type: string
+        service:
+          title: The Service being added to the network, including optional experimental metadata
+          $ref: '#/components/schemas/pocket.shared.Service'
+    pocket.migration.MsgClaimMorseAccount:
+      description: '- Execute a claim (one-time minting of tokens on Shannon)
+
+        - Claim the balance of a given Morse account per on-chain MorseClaimableAccounts
+
+        - Mint claimed balance to the given Shannon account
+
+
+        NOTE:
+
+        - A transaction can contain ONE OR MORE Morse account/actor claim messages AND has EXACTLY ONE signer.
+
+        - The Shannon account specified must be the message signer
+
+        - Authz grants MAY be used to delegate claiming authority to other Shannon accounts'
+      type: object
+      title: 'MsgClaimMorseAccount is used to:'
+      properties:
+        morse_public_key:
+          description: The ed25519 public key of the morse account with morse_src_address.
+          type: string
+          format: byte
+        morse_signature:
+          type: string
+          format: byte
+          title: 'The hex-encoded signature, by the Morse account, of this message (where this field is nil).
+
+            I.e.: morse_signature = private_key.sign(marshal(MsgClaimMorseAccount{morse_signature: nil, ...}))'
+        shannon_dest_address:
+          description: The bech32-encoded address of the Shannon account to which the claimed balance will be minted.
+          type: string
+        shannon_signing_address:
+          description: 'The bech32-encoded address of the Shannon account which is signing for this message.
+
+            This account is liable for any fees incurred by violating the constraints of Morse
+
+            account/actor claim message fee waiving.'
+          type: string
+    pocket.gateway.MsgUpdateParamsResponse:
+      description: 'MsgUpdateParamsResponse defines the response structure for executing a
+
+        MsgUpdateParams message.'
+      type: object
+    pocket.migration.MsgRecoverMorseAccount:
+      description: '- Execute a one-time minting of tokens on Shannon based on tokens owned by the given Morse account
+
+        - Credit the minted tokens to the balance of the given Shannon account
+
+        - Migrate unclaimable staked and liquid Morse tokens as liquid Shannon tokens
+
+
+        - MAY ONLY be executed by the authority
+
+        - ONLY intended for use on accounts with invalid addresses and/or known lost private keys
+
+
+        Next free index: 4'
+      type: object
+      title: 'MsgRecoverMorseAccount is used to:'
+      properties:
+        authority:
+          description: 'The bech32-encoded address of the migration module authority account ("gov" module address by default).
+
+            ONLY the authority, or its delegates, MAY recover Morse recoverable accounts.'
+          type: string
+        morse_src_address:
+          type: string
+          title: "EITHER:\n- The hex-encoded address of the recoverable Morse account whose stake(s) and/or balance(s) will be recovered.\n  This address MAY be invalid but NEVER empty.\n  E.g.: 00f9900606fa3d5c9179fc0c8513078a53a2073e\n- The name of a Morse module account whose balance will be recovered.\n  E.g. \"dao\" or \"fee-collector\""
+        shannon_dest_address:
+          description: 'The bech32-encoded address of the Shannon account to which the Morse account''s stake(s) and/or
+
+            balance(s) will be minted (recovered) as liquid Shannon tokens.'
+          type: string
+    pocket.application.MsgUpdateParamsResponse:
+      description: 'MsgUpdateParamsResponse defines the response structure for executing a
+
+        MsgUpdateParams message.'
+      type: object
+    pocket.tokenomics.MintAllocationPercentages:
+      description: 'MintAllocationPercentages captures the distribution of newly minted tokens.
+
+        The sum of all new tokens minted must equal 1.
+
+        GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.
+
+        TODO_DISTANT_FUTURE: Remove this once global inflation is disabled in perpetuity.'
+      type: object
+      properties:
+        application:
+          description: application - % of newley minted tokens sent to the application account address.
+          type: number
+          format: double
+        dao:
+          description: dao - % of newley minted tokens sent to the DAO reward address.
+          type: number
+          format: double
+        proposer:
+          description: proposer - % of newley minted tokens sent to the block proposer (i.e. validator0 account address.
+          type: number
+          format: double
+        source_owner:
+          description: source_owner - % of newley minted tokens sent to the service source owner account address.
+          type: number
+          format: double
+        supplier:
+          description: supplier - % of newley minted tokens sent to the block supplier account address.
+          type: number
+          format: double
+    pocket.gateway.MsgUpdateParamResponse:
+      type: object
+    pocket.shared.Metadata:
+      description: 'Metadata message to hold additional metadata for a service.
+
+        The raw bytes are stored on-chain and will be base64 encoded in JSON representations.'
+      type: object
+      properties:
+        experimental_api_specs:
+          description: 'EXPERIMENTAL: Serialized API spec limited to 100 KiB when decoded.
+
+            TODO(@future): support dedicated openapi_ / openrpc_ fields once formats stabilize.'
+          type: string
+          format: byte
+    pocket.application.MsgDelegateToGatewayResponse:
+      type: object
+    pocket.migration.MsgClaimMorseApplicationResponse:
+      description: 'MsgClaimMorseApplicationResponse is returned from MsgClaimMorseApplication.
+
+
+        - Indicates the morse_src_address of the claimed account
+
+        - Reports the unstaked balance claimed, application stake, and commit height
+
+        - Returns the staked application
+
+
+        Next free index: 6'
+      type: object
+    pocket.shared.SupplierServiceConfig:
+      type: object
+      title: SupplierServiceConfig holds the service configuration the supplier stakes for
+      properties:
+        endpoints:
           type: array
-          title: Additional configuration options for the endpoint
+          title: List of endpoints for the service
           items:
             type: object
-            $ref: '#/components/schemas/pocket.shared.ConfigOption'
-        rpc_type:
-          title: Type of RPC exposed on the url above
-          $ref: '#/components/schemas/pocket.shared.RPCType'
-        url:
+            $ref: '#/components/schemas/pocket.shared.SupplierEndpoint'
+        rev_share:
+          type: array
+          title: List of revenue share configurations for the service
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ServiceRevenueShare'
+        service_id:
           type: string
-          title: URL of the endpoint
+          title: The Service ID for which the supplier is configured
+    pocket.application.MsgDelegateToGateway:
+      type: object
+      properties:
+        app_address:
+          description: The Bech32 address of the application.
+          type: string
+        gateway_address:
+          description: The Bech32 address of the gateway the application wants to delegate to.
+          type: string
     pocket.proof.MsgUpdateParams:
       description: MsgUpdateParams is the Msg/UpdateParams request type to update all params at once.
       type: object
@@ -2130,45 +1809,51 @@ components:
 
             NOTE: All parameters must be supplied.'
           $ref: '#/components/schemas/pocket.proof.Params'
-    pocket.migration.MsgClaimMorseSupplierResponse:
-      description: 'MsgClaimMorseSupplierResponse is returned from MsgClaimMorseSupplier.
-
-
-        - Indicates the morse_operator_address of the claimed account
-
-        - Reports the unstaked balance claimed, session end height, and staked supplier
-
-        - Includes claim signer type and signer address
-
-
-        Next free index: 10'
+    pocket.proof.MsgCreateClaim:
       type: object
-    pocket.migration.MsgClaimMorseAccountResponse:
-      description: 'MsgClaimMorseAccountResponse is returned from MsgClaimMorseAccount.
-
-
-        - Indicates the morse_src_address of the claimed account
-
-        - Reports the claimed balance and commit height
-
-
-        Next free index: 4'
-      type: object
-    pocket.supplier.MsgUpdateParamsResponse:
-      description: 'MsgUpdateParamsResponse defines the response structure for executing a
-
-        MsgUpdateParams message.'
-      type: object
-    pocket.shared.ConfigOption:
-      type: object
-      title: Key-value wrapper for config options, as proto maps can't be keyed by enums
       properties:
-        key:
-          title: Config option key
-          $ref: '#/components/schemas/pocket.shared.ConfigOptions'
-        value:
+        root_hash:
           type: string
-          title: Config option value
+          format: byte
+          title: root returned from smt.SMST#Root()
+        session_header:
+          $ref: '#/components/schemas/pocket.session.SessionHeader'
+        supplier_operator_address:
+          type: string
+    pocket.shared.ServiceRevenueShare:
+      type: object
+      title: ServiceRevenueShare message to hold revenue share configuration details
+      properties:
+        address:
+          type: string
+          title: The Bech32 address of the revenue share recipient
+        rev_share_percentage:
+          type: string
+          format: uint64
+          title: The percentage of revenue share the recipient will receive
+    pocket.proof.MsgSubmitProof:
+      type: object
+      properties:
+        proof:
+          type: string
+          format: byte
+          title: serialized version of *smt.SparseCompactMerkleClosestProof
+        session_header:
+          $ref: '#/components/schemas/pocket.session.SessionHeader'
+        supplier_operator_address:
+          type: string
+    pocket.gateway.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type.
+      type: object
+      properties:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        params:
+          description: 'params defines the x/gateway parameters to update.
+
+            NOTE: All parameters must be supplied.'
+          $ref: '#/components/schemas/pocket.gateway.Params'
     pocket.proof.Params:
       description: Params defines the parameters for the module.
       type: object
@@ -2211,44 +1896,214 @@ components:
 
             TODO_MAINNET_MIGRATION: Consider renaming this to `proof_submission_fee_upokt`.'
           $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.session.MsgUpdateParamResponse:
+    pocket.shared.ConfigOption:
       type: object
-    pocket.application.MsgUpdateParamResponse:
-      type: object
-    pocket.service.MsgAddService:
-      description: 'MsgAddService defines a message for adding a new message to the network.
-
-        Services can be added by any actor in the network making them truly
-
-        permissionless.'
-      type: object
+      title: Key-value wrapper for config options, as proto maps can't be keyed by enums
       properties:
-        owner_address:
-          description: The Bech32 address of the service owner.
+        key:
+          title: Config option key
+          $ref: '#/components/schemas/pocket.shared.ConfigOptions'
+        value:
           type: string
-        service:
-          title: The Service being added to the network, including optional experimental metadata
-          $ref: '#/components/schemas/pocket.shared.Service'
+          title: Config option value
+    pocket.gateway.MsgUnstakeGatewayResponse:
+      type: object
+    pocket.service.MsgAddServiceResponse:
+      type: object
+    pocket.migration.MorseAccountState:
+      type: object
+      title: 'MorseAccountState
+
+        - Onchain representation of all account state to be migrated from Morse
+
+        - NEVER persisted onchain
+
+        - Dependency of the MsgImportMorseClaimableAccount handler
+
+        - Main purpose: exposes #GetHash() for verifying integrity of all MorseClaimableAccounts'
+      properties:
+        accounts:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.migration.MorseClaimableAccount'
+    pocket.application.MsgTransferApplicationResponse:
+      type: object
     google.protobuf.Any:
       type: object
       properties:
         '@type':
           type: string
       additionalProperties: {}
-    pocket.supplier.Params:
-      description: Params defines the parameters for the module.
+    pocket.supplier.MsgUnstakeSupplier:
       type: object
       properties:
-        min_stake:
-          description: 'min_stake is the minimum amount of uPOKT that a supplier must stake to be
-
-            included in network sessions and remain staked.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        staking_fee:
-          description: staking_fee is the fee charged by the protocol for staking a supplier.
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.service.MsgAddServiceResponse:
+        operator_address:
+          type: string
+          title: The Bech32 address of the operator (i.e. provider, non-custodial)
+        signer:
+          type: string
+          title: The Bech32 address of the message signer (i.e. owner or operator)
+    pocket.shared.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type.
       type: object
+      properties:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        params:
+          description: 'NOTE: All parameters must be supplied.'
+          $ref: '#/components/schemas/pocket.shared.Params'
+    pocket.migration.MsgClaimMorseApplication:
+      description: '- Execute a claim (one-time minting of tokens on Shannon) of total tokens owned by a Morse account
+
+        - Mint claimed tokens to the given Shannon account
+
+        - Stake that Shannon account as an application for the given service_config and same stake amount
+
+
+        Next free index: 7'
+      type: object
+      title: 'MsgClaimMorseApplication is used to:'
+      properties:
+        morse_public_key:
+          description: The ed25519 public key of the morse account with morse_src_address.
+          type: string
+          format: byte
+        morse_signature:
+          type: string
+          format: byte
+          title: 'The hex-encoded signature, by the Morse account, of this message (where this field is nil).
+
+            I.e.: morse_signature = private_key.sign(marshal(MsgClaimMorseAccount{morse_signature: nil, ...}))'
+        service_config:
+          description: 'The services this application is staked to request service for.
+
+            NOTE: This is not a repeated field, as in MsgStakeApplication,
+
+            because an application can only be staked for one service.'
+          $ref: '#/components/schemas/pocket.shared.ApplicationServiceConfig'
+        shannon_dest_address:
+          description: 'The bech32-encoded address of the Shannon account to which the claimed tokens
+
+            will be minted and from which the application will be staked.'
+          type: string
+        shannon_signing_address:
+          description: 'The bech32-encoded address of the Shannon account which is signing for this message.
+
+            This account is liable for any fees incurred by violating the constraints of Morse
+
+            account/actor claim message fee waiving; the tx contains ONE OR MORE Morse account/actor
+
+            claim messages AND has EXACTLY ONE signer.'
+          type: string
+    pocket.migration.MsgRecoverMorseAccountResponse:
+      description: 'MsgRecoverMorseAccountResponse is returned from MsgRecoverMorseAccount.
+
+
+        - Indicates the morse_src_address of the recovered account
+
+        - Reports the sum of any actor stakes and unstaked balance recovered
+
+        - Reports the session end height in which the recovery was committed
+
+        - Returns the destination Shannon address
+
+
+        Next free index: 5'
+      type: object
+    pocket.tokenomics.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type to update all params at once.
+      type: object
+      properties:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        params:
+          description: params defines the tokenomics parameters to update.
+          $ref: '#/components/schemas/pocket.tokenomics.Params'
+    pocket.tokenomics.Params:
+      description: Params defines the parameters for the tokenomics module.
+      type: object
+      properties:
+        dao_reward_address:
+          description: 'dao_reward_address is where the DAO''s portion of claims submitted are distributed.
+
+
+            Bech32 cosmos address'
+          type: string
+        global_inflation_per_claim:
+          description: 'global_inflation_per_claim is the percentage of a claim''s claimable uPOKT amount to be minted on settlement.
+
+            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
+          type: number
+          format: double
+        mint_allocation_percentages:
+          description: 'mint_allocation_percentages represents the distribution of newly minted tokens.
+
+            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
+          $ref: '#/components/schemas/pocket.tokenomics.MintAllocationPercentages'
+        mint_equals_burn_claim_distribution:
+          description: 'mint_equals_burn_claim_distribution controls how the settlement amount is distributed
+
+            when global inflation is disabled (global_inflation_per_claim = 0).
+
+            MintEqualsBurnTLM: Only used by the MintEqualsBurnTLM at the end of claim settlement.'
+          $ref: '#/components/schemas/pocket.tokenomics.MintEqualsBurnClaimDistribution'
+    pocket.gateway.MsgStakeGateway:
+      type: object
+      properties:
+        address:
+          type: string
+          title: The Bech32 address of the gateway
+        stake:
+          title: The total amount of uPOKT the gateway is staking. Must be ≥ to the current amount that the gateway has staked (if any)
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.tokenomics.MintEqualsBurnClaimDistribution:
+      description: 'MintEqualsBurnClaimDistribution captures the distribution of claimable tokens.
+
+        The sum of all tokens being burnt from the application''s stake must equal 1.
+
+        GlobalMintEqualsBurnTLM: Only used by the GlobalMintEqualsBurnTLM at the end of claim settlement.'
+      type: object
+      properties:
+        application:
+          description: application - % of claimable tokens sent to the application account address.
+          type: number
+          format: double
+        dao:
+          description: dao - % of claimable tokens sent to the DAO reward address.
+          type: number
+          format: double
+        proposer:
+          description: 'TODO_TECHDEBT: Rename "proposer" to "validators" to reflect the work done in #1753.
+
+            This will span all references to the term "proposer" across documentation, functions, protobufs, variables, tooling, etc..
+
+
+            proposer - % of claimable tokens sent to the block proposer (i.e. validator0) account address.'
+          type: number
+          format: double
+        source_owner:
+          description: source_owner - % of claimable tokens sent to the service source owner account address.
+          type: number
+          format: double
+        supplier:
+          description: supplier - % of claimable tokens sent to the block supplier account address.
+          type: number
+          format: double
+    pocket.session.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type.
+      type: object
+      properties:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        params:
+          description: 'params defines the x/session parameters to update.
+
+            NOTE: All parameters must be supplied.'
+          $ref: '#/components/schemas/pocket.session.Params'
     pocket.supplier.MsgStakeSupplier:
       type: object
       properties:
@@ -2270,3 +2125,148 @@ components:
         stake:
           title: The total amount of uPOKT the supplier has staked. Must be ≥ to the current amount that the supplier has staked (if any)
           $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.shared.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        application_unbonding_period_sessions:
+          description: 'application_unbonding_period_sessions is the number of sessions that an application must wait after
+
+            unstaking before their staked assets are moved to their account balance.
+
+            Onchain business logic requires, and ensures, that the corresponding block count of the
+
+            application unbonding period will exceed the end of its corresponding proof window close height.'
+          type: string
+          format: uint64
+        claim_window_close_offset_blocks:
+          description: 'claim_window_close_offset_blocks is the number of blocks after the claim window
+
+            open height, at which the claim window closes.'
+          type: string
+          format: uint64
+        claim_window_open_offset_blocks:
+          description: 'claim_window_open_offset_blocks is the number of blocks after the session grace
+
+            period height, at which the claim window opens.'
+          type: string
+          format: uint64
+        compute_unit_cost_granularity:
+          description: "compute_unit_cost_granularity is the fraction of the base unit (uPOKT) used\nto represent the smallest price of a single compute unit.\ncompute_unit_cost_granularity defines the smallest fraction of uPOKT that can represent\nthe cost of a single compute unit.\n\nIt acts as a denominator in the formula:\n\n  compute_unit_cost_in_uPOKT = compute_units_to_tokens_multiplier / compute_unit_cost_granularity\n\nThis enables high-precision pricing of compute units using integer math.\nFor example:\n\n+-------------------------------+---------------------------------------------+\n| compute_unit_cost_granularity | compute_units_to_tokens_multiplier unit     |\n+-------------------------------+---------------------------------------------+\n| 1                             | uPOKT                                       |\n| 1_000                         | nPOKT (nanoPOKT, 1e-3 uPOKT)                |\n| 1_000_000                     | pPOKT (picoPOKT, 1e-6 uPOKT)                |\n+-------------------------------+---------------------------------------------+\n\n⚠️ Note: This value is a configurable global network parameter (not a constant).\nIt must be a power of 10, allowing precise denomination shifts without affecting\nongoing sessions. This prevents sessions from settling using parameters that\nwere not in effect during their creation."
+          type: string
+          format: uint64
+        compute_units_to_tokens_multiplier:
+          description: 'The amount of tokens that a compute unit should translate to when settling a session.
+
+            It is denominated in fractional uPOKT (1/compute_unit_cost_granularity)
+
+            DEV_NOTE: This used to be under x/tokenomics but has been moved here to avoid cyclic dependencies.'
+          type: string
+          format: uint64
+        gateway_unbonding_period_sessions:
+          description: 'gateway_unbonding_period_sessions is the number of sessions that a gateway must wait after
+
+            unstaking before their staked assets are moved to its account balance.'
+          type: string
+          format: uint64
+        grace_period_end_offset_blocks:
+          description: 'grace_period_end_offset_blocks is the number of blocks, after the session end height,
+
+            during which the supplier can still service payable relays.
+
+            Suppliers will need to recreate a claim for the previous session (if already created) to
+
+            get paid for the additional relays.'
+          type: string
+          format: uint64
+        num_blocks_per_session:
+          description: num_blocks_per_session is the number of blocks between the session start & end heights.
+          type: string
+          format: uint64
+        proof_window_close_offset_blocks:
+          description: 'proof_window_close_offset_blocks is the number of blocks after the proof window
+
+            open height, at which the proof window closes.'
+          type: string
+          format: uint64
+        proof_window_open_offset_blocks:
+          description: 'proof_window_open_offset_blocks is the number of blocks after the claim window
+
+            close height, at which the proof window opens.'
+          type: string
+          format: uint64
+        supplier_unbonding_period_sessions:
+          description: 'supplier_unbonding_period_sessions is the number of sessions that a supplier must wait after
+
+            unstaking before their staked assets are moved to their account balance.
+
+            Onchain business logic requires, and ensures, that the corresponding block count of the unbonding
+
+            period will exceed the end of any active claim & proof lifecycles.'
+          type: string
+          format: uint64
+    pocket.session.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        num_suppliers_per_session:
+          description: 'num_suppliers_per_session is the maximum number of suppliers per session
+
+            (application:supplier pair for a given session number).'
+          type: string
+          format: uint64
+    pocket.supplier.MsgUpdateParam:
+      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
+      type: object
+      properties:
+        as_coin:
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        name:
+          type: string
+    cosmos.base.v1beta1.Coin:
+      description: 'Coin defines a token with a denomination and an amount.
+
+
+        NOTE: The amount field is an Int which implements the custom method
+
+        signatures required by gogoproto.'
+      type: object
+      properties:
+        amount:
+          type: string
+        denom:
+          type: string
+    pocket.tokenomics.MsgUpdateParam:
+      description: MsgUpdateParam is the Msg/UpdateParam request type to update a single param.
+      type: object
+      properties:
+        as_float:
+          type: number
+          format: double
+        as_mint_allocation_percentages:
+          $ref: '#/components/schemas/pocket.tokenomics.MintAllocationPercentages'
+        as_mint_equals_burn_claim_distribution:
+          $ref: '#/components/schemas/pocket.tokenomics.MintEqualsBurnClaimDistribution'
+        as_string:
+          type: string
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        name:
+          type: string
+          title: The (name, as_type) tuple must match the corresponding name and type as specified in the `Params` message in `proof/params.proto.`
+    pocket.supplier.MsgUpdateParams:
+      description: MsgUpdateParams is the Msg/UpdateParams request type.
+      type: object
+      properties:
+        authority:
+          description: authority is the address that controls the module (defaults to x/gov unless overwritten).
+          type: string
+        params:
+          description: 'params defines the x/supplier parameters to update.
+
+            NOTE: All parameters must be supplied.'
+          $ref: '#/components/schemas/pocket.supplier.Params'

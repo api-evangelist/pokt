@@ -332,6 +332,30 @@ paths:
                     result: '0x4a817c800'
 components:
   parameters:
+    PortalAPIKey:
+      name: Authorization
+      in: header
+      required: false
+      description: 'Grove API Key for authorization (optional).
+
+
+        **When to use:**
+
+        - Required if your Grove Portal application requires API key authorization
+
+        - Not required for applications without API key restrictions
+
+        - Only applicable when using production URLs (`https://{serviceId}.rpc.grove.city`)
+
+        - Not used with local PATH instances (`http://localhost:3069`)
+
+
+        Get yours at https://portal.grove.city/
+
+        '
+      schema:
+        type: string
+      example: your-api-key
     TargetServiceIdParam:
       name: Target-Service-Id
       in: header
@@ -377,27 +401,3 @@ components:
       schema:
         type: string
       example: your-grove-portal-app-id
-    PortalAPIKey:
-      name: Authorization
-      in: header
-      required: false
-      description: 'Grove API Key for authorization (optional).
-
-
-        **When to use:**
-
-        - Required if your Grove Portal application requires API key authorization
-
-        - Not required for applications without API key restrictions
-
-        - Only applicable when using production URLs (`https://{serviceId}.rpc.grove.city`)
-
-        - Not used with local PATH instances (`http://localhost:3069`)
-
-
-        Get yours at https://portal.grove.city/
-
-        '
-      schema:
-        type: string
-      example: your-api-key

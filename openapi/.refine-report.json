@@ -11,9 +11,7 @@
     "pokt-msg-api-openapi.yml",
     "pokt-query-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -27,13 +25,14 @@
     "path_openapi.yaml: declared missing tag: Healthz",
     "path_openapi.yaml: declared missing tag: PATH Path API & Toolkit Harness",
     "poktroll_openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "superseded outputs removed: pokt-api-api-openapi.yml",
-    "apis.yml register: written (+3 apis, 7 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "_original/poktroll_openapi.yaml: archived document superseded by a larger archived document",
-    "pokt-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pokt-disqualified-endpoints-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pokt-healthz-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pokt-msg-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "pokt-path-path-api-toolkit-harness-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "pokt-query-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

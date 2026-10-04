@@ -332,6 +332,28 @@ paths:
                     result: '0x4a817c800'
 components:
   parameters:
+    TargetServiceIdParam:
+      name: Target-Service-Id
+      in: header
+      required: false
+      description: 'The service ID to route the request to (required for local PATH instance)
+
+
+        **Required when using:**
+
+        - `http://localhost:3069` (local PATH instance)
+
+
+        **Not required when using:**
+
+        - `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)
+
+
+        When using subdomain-based URLs, the service ID is automatically determined from the subdomain.
+
+        '
+      schema:
+        type: string
     PortalAPIKey:
       name: Authorization
       in: header
@@ -356,28 +378,6 @@ components:
       schema:
         type: string
       example: your-api-key
-    TargetServiceIdParam:
-      name: Target-Service-Id
-      in: header
-      required: false
-      description: 'The service ID to route the request to (required for local PATH instance)
-
-
-        **Required when using:**
-
-        - `http://localhost:3069` (local PATH instance)
-
-
-        **Not required when using:**
-
-        - `https://{serviceId}.rpc.grove.city` (service-specific subdomain URLs)
-
-
-        When using subdomain-based URLs, the service ID is automatically determined from the subdomain.
-
-        '
-      schema:
-        type: string
     PortalApplicationIdParam:
       name: Portal-Application-ID
       in: header

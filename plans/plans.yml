@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Pocket Network API Plans
 description: Pocket Network offers a tiered access model ranging from free public RPC endpoints to dedicated throughput via POKT token staking. The Shannon upgrade (June 2025) made the network fully permissionless — anyone can stake POKT to act as a Gateway operator or Supplier without centralized approval.
 url: https://pocket.network/
@@ -82,3 +86,48 @@ plans:
       - Chain-specific Compute Unit pricing
       - Prometheus metrics and health endpoints
       - Self-hosted infrastructure control
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - metered
+  - subscription
+  units:
+  - token
+  plans:
+  - name: Public RPC (Free)
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Application Staking (Self-Service)
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - token
+    periods: []
+  - name: Gateway Delegation (Managed)
+    access: other
+    model: unstated
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Public Sponsorship
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - token
+    periods: []
+  - name: PATH Gateway (Wholesale / Operator)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []

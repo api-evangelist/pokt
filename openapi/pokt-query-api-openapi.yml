@@ -1018,695 +1018,16 @@ paths:
                 $ref: '#/components/schemas/google.rpc.Status'
 components:
   schemas:
-    pocket.proof.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.proof.Params'
-    pocket.tokenomics.MintAllocationPercentages:
-      description: 'MintAllocationPercentages captures the distribution of newly minted tokens.
-
-        The sum of all new tokens minted must equal 1.
-
-        GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.
-
-        TODO_DISTANT_FUTURE: Remove this once global inflation is disabled in perpetuity.'
-      type: object
-      properties:
-        application:
-          description: application - % of newley minted tokens sent to the application account address.
-          type: number
-          format: double
-        dao:
-          description: dao - % of newley minted tokens sent to the DAO reward address.
-          type: number
-          format: double
-        proposer:
-          description: proposer - % of newley minted tokens sent to the block proposer (i.e. validator0 account address.
-          type: number
-          format: double
-        source_owner:
-          description: source_owner - % of newley minted tokens sent to the service source owner account address.
-          type: number
-          format: double
-        supplier:
-          description: supplier - % of newley minted tokens sent to the block supplier account address.
-          type: number
-          format: double
-    pocket.supplier.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.supplier.Params'
-    pocket.session.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        num_suppliers_per_session:
-          description: 'num_suppliers_per_session is the maximum number of suppliers per session
-
-            (application:supplier pair for a given session number).'
-          type: string
-          format: uint64
-    pocket.service.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.service.Params'
-    pocket.gateway.QueryGetGatewayResponse:
-      type: object
-      properties:
-        gateway:
-          $ref: '#/components/schemas/pocket.gateway.Gateway'
-    pocket.service.QueryGetServiceResponse:
-      type: object
-      properties:
-        service:
-          $ref: '#/components/schemas/pocket.shared.Service'
-    pocket.application.QueryAllApplicationsResponse:
-      type: object
-      properties:
-        applications:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.application.Application'
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-    pocket.shared.Supplier:
-      type: object
-      title: Supplier represents an actor in Pocket Network that provides RPC services
-      properties:
-        operator_address:
-          description: 'Operator address managing the offchain server
-
-            Immutable for supplier''s lifespan - requires unstake/re-stake to change.
-
-            Can update supplier configs except for owner address.'
-          type: string
-        owner_address:
-          type: string
-          title: 'Owner address that controls the staked funds and receives rewards by default
-
-            Cannot be updated by the operator'
-        service_config_history:
-          description: 'List of historical service configuration updates, tracking the suppliers
-
-            services update and corresponding activation heights.'
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.ServiceConfigUpdate'
-        services:
-          type: array
-          title: List of service configurations supported by this supplier
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.SupplierServiceConfig'
-        stake:
-          title: Total amount of staked uPOKT
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        unstake_session_end_height:
-          type: string
-          format: uint64
-          title: Session end height when supplier initiated unstaking (0 if not unstaking)
-    pocket.shared.ConfigOption:
-      type: object
-      title: Key-value wrapper for config options, as proto maps can't be keyed by enums
-      properties:
-        key:
-          title: Config option key
-          $ref: '#/components/schemas/pocket.shared.ConfigOptions'
-        value:
-          type: string
-          title: Config option value
-    cosmos.base.v1beta1.Coin:
-      description: 'Coin defines a token with a denomination and an amount.
-
-
-        NOTE: The amount field is an Int which implements the custom method
-
-        signatures required by gogoproto.'
-      type: object
-      properties:
-        amount:
-          type: string
-        denom:
-          type: string
-    pocket.session.SessionHeader:
-      description: 'SessionHeader is a lightweight header for a session that can be passed around.
-
-        It is the minimal amount of data required to hydrate & retrieve all data relevant to the session.'
-      type: object
-      properties:
-        application_address:
-          description: The Bech32 address of the application.
-          type: string
-        service_id:
-          type: string
-          title: The service id this session is for
-        session_end_block_height:
-          description: 'Note that`session_end_block_height` is a derivative of (`start` + `num_blocks_per_session`)
-
-            as governed by onchain params at the time of the session start.
-
-            It is stored as an additional field to simplify business logic in case
-
-            the number of blocks_per_session changes during the session.
-
-
-            The height at which this session ended, this is the last block of the session'
-          type: string
-          format: int64
-        session_id:
-          description: A unique pseudorandom ID for this session
-          type: string
-          title: 'NOTE: session_id can be derived from the above values using onchain but is included in the header for convenience'
-        session_start_block_height:
-          type: string
-          format: int64
-          title: The height at which this session started
-    pocket.gateway.QueryAllGatewaysResponse:
-      type: object
-      properties:
-        gateways:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.gateway.Gateway'
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-    pocket.shared.Service:
-      type: object
-      title: Service message to encapsulate unique and semantic identifiers for a service on the network
-      properties:
-        compute_units_per_relay:
-          description: Compute units required per relay for this service
-          type: string
-          format: uint64
-          title: 'The cost of a single relay for this service in terms of compute units.
-
-            Must be used alongside the global ''compute_units_to_tokens_multiplier'' to calculate the cost of a relay for this service.
-
-            cost_per_relay_for_specific_service = compute_units_per_relay_for_specific_service * compute_units_to_tokens_multiplier_global_value'
-        id:
-          description: Unique identifier for the service
-          type: string
-          title: For example, what if we want to request a session for a certain service but with some additional configs that identify it?
-        metadata:
-          description: 'Optional metadata containing an experimental API specification for the service.
-
-            When exposed via JSON, this field is base64 encoded and MUST be <= 100 KiB when decoded.'
-          $ref: '#/components/schemas/pocket.shared.Metadata'
-        name:
-          description: (Optional) Human readable description of the service
-          type: string
-          title: 'TODO_POST_MAINNET: Rename service.name to service.description'
-        owner_address:
-          description: 'The owner address that created the service.
-
-            It is the address that receives rewards based on the Service''s onchain usage
-
-            It is the only address that can update the service configuration (e.g. compute_units_per_relay),
-
-            or make other updates to it.
-
-
-            The Bech32 address of the service owner / creator'
-          type: string
-    pocket.application.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.application.Params'
-    pocket.service.QueryGetRelayMiningDifficultyResponse:
-      type: object
-      properties:
-        relayMiningDifficulty:
-          $ref: '#/components/schemas/pocket.service.RelayMiningDifficulty'
-    pocket.migration.QueryAllMorseClaimableAccountResponse:
-      type: object
-      properties:
-        morseClaimableAccount:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.migration.MorseClaimableAccount'
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-    pocket.migration.QueryMorseClaimableAccountResponse:
-      type: object
-      properties:
-        morseClaimableAccount:
-          $ref: '#/components/schemas/pocket.migration.MorseClaimableAccount'
-    google.protobuf.Any:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    pocket.shared.ServiceConfigUpdate:
-      description: 'ServiceConfigUpdate tracks a change in a supplier''s service configurations
-
-        at a specific block height, enabling tracking of configuration changes over time.
-
-        This record helps maintain a complete history of service configs and their availability periods.'
-      type: object
-      properties:
-        activation_height:
-          type: string
-          format: int64
-          title: Block height at which this service configuration became active in the network
-        deactivation_height:
-          type: string
-          format: int64
-          title: "Block height at which this service configuration was deactivated (0 if still active)\nFor service configs scheduled for deactivation:\n- This field stores the block height when deactivation will occur\n- After deactivation, the config remains in history only as needed for claim settlement\n- Once no longer required for settlement, the config is automatically removed by\n  the EndBlockerPruneSupplierServiceConfigHistory process"
-        operator_address:
-          type: string
-          title: Operator address of the supplier corresponding to the service configuration change
-        service:
-          title: The specific service configuration that was added, modified or scheduled for removal
-          $ref: '#/components/schemas/pocket.shared.SupplierServiceConfig'
-    pocket.session.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.session.Params'
-    pocket.supplier.QueryGetSupplierResponse:
-      type: object
-      properties:
-        supplier:
-          $ref: '#/components/schemas/pocket.shared.Supplier'
-    pocket.session.Session:
-      description: 'Session is a fully hydrated session object that contains all the information for the Session
-
-        and its participants.'
-      type: object
-      properties:
-        application:
-          title: A fully hydrated application object this session is for
-          $ref: '#/components/schemas/pocket.application.Application'
-        header:
-          title: The header of the session containing lightweight data
-          $ref: '#/components/schemas/pocket.session.SessionHeader'
-        num_blocks_per_session:
-          type: string
-          format: int64
-          title: The number of blocks per session when this session started
-        session_id:
-          type: string
-          title: A unique pseudorandom ID for this session
-        session_number:
-          type: string
-          format: int64
-          title: The session number since genesis
-        suppliers:
-          type: array
-          title: A fully hydrated set of servicers that are serving the application
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.Supplier'
-    pocket.gateway.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        min_stake:
-          description: min_stake is the minimum amount of uPOKT that a gateway must stake.
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.shared.SupplierServiceConfig:
-      type: object
-      title: SupplierServiceConfig holds the service configuration the supplier stakes for
-      properties:
-        endpoints:
-          type: array
-          title: List of endpoints for the service
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.SupplierEndpoint'
-        rev_share:
-          type: array
-          title: List of revenue share configurations for the service
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.ServiceRevenueShare'
-        service_id:
-          type: string
-          title: The Service ID for which the supplier is configured
-    pocket.application.Application:
-      type: object
-      title: Application represents the onchain definition and state of an application
-      properties:
-        address:
-          type: string
-          title: Bech32 address of the application
-        delegatee_gateway_addresses:
-          description: 'TODO_MAINNET_MIGRATION(@bryanchriswhite): Rename `delegatee_gateway_addresses` to `gateway_addresses_delegated_to` for better clarity and consistency.
-
-            - Update all related configs, comments, variables, and function names throughout the codebase to reflect this change.
-
-            - This field is a non-nullable list of Bech32-encoded delegatee Gateway addresses.'
-          type: array
-          items:
-            type: string
-        pending_transfer:
-          title: Information about pending application transfers
-          $ref: '#/components/schemas/pocket.application.PendingApplicationTransfer'
-        pending_undelegations:
-          description: 'Mapping of session end heights to gateways being undelegated from
-
-            - Key: Height of the last block of the session when the undelegation transaction was committed
-
-            - Value: List of gateways being undelegated from at that session end height
-
-            TODO_DOCUMENT(@red-0ne): Document the complete flow and rationale behind this mapping.
-
-            - Ensure the documentation explains why tracking pending undelegations by session end height is necessary.
-
-            - See: https://github.com/pokt-network/poktroll/issues/476#issuecomment-2052639906 for context and examples.'
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/pocket.application.UndelegatingGatewayList'
-        service_configs:
-          type: array
-          title: "CRITICAL: Must contain EXACTLY ONE service config\n- Enforces a single service configuration per application to prevent over-servicing.\n- Field is repeated for legacy reasons and potential future compatibility.\n- References for rationale:\n  - https://github.com/pokt-network/poktroll/pull/750#discussion_r1735025033\n  - https://www.notion.so/buildwithgrove/Off-chain-Application-Stake-Tracking-6a8bebb107db4f7f9dc62cbe7ba555f7"
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.ApplicationServiceConfig'
-        stake:
-          title: Total amount of staked uPOKT
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        unstake_session_end_height:
-          type: string
-          format: uint64
-          title: Session end height when application initiated unstaking (0 if not unstaking)
-    pocket.migration.MorseClaimableAccount:
-      description: 'Next free index: 11'
-      type: object
-      title: "MorseClaimableAccount\n- Onchain (persisted) representation of a Morse account claimable as part of Morse -> Shannon migration\n- Created during MorseAccountState import (see: MsgImportMorseClaimableAccount)\n- Created ONLY ONCE and NEVER deleted (per morse_src_address per network / re-genesis),\n  unless the allow_morse_account_import_overwrite migration param is enabled\n- Updated ONLY ONCE, when claimed (per morse_src_address per network / re-genesis)"
-      properties:
-        application_stake:
-          title: Staked tokens for application actor corresponding to this account address
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        claimed_at_height:
-          type: string
-          format: int64
-          title: 'Shannon height at which the account was claimed
-
-            Intended to remain empty until the account is claimed'
-        morse_output_address:
-          description: "ONLY applicable to Morse node/supplier accounts.\nHex-encoded address of the Morse output account/wallet associated with the Morse node/supplier.\n- E.g.: 00f9900606fa3d5c9179fc0c8513078a53a2073e\n- Morse custodial (i.e. owner) address, which owns the staked tokens of the operator.\n  See 'pocket nodes --help' for more information. Note that this refers to the Morse CLI."
-          type: string
-        morse_src_address:
-          description: "Hex-encoded address of the Morse account whose balance will be claimed.\nIf this MorseClaimableAccount represents a Morse node/supplier:\n  - Morse non-custodial (i.e. operator) address.\n  - If morse_output_address is not set, this is the custodial address.\n  - See 'pocket nodes --help' for more information. Note that this refers to the Morse CLI."
-          type: string
-        shannon_dest_address:
-          type: string
-          title: 'bech32-encoded address of the Shannon account to mint claimed balance
-
-            Intended to remain empty until the account is claimed'
-        supplier_stake:
-          title: 'Staked tokens for supplier actor corresponding to this account address
-
-            DEV_NOTE: Context for Morse:
-
-            - Supplier = Servicer or Node (not a full node) in Morse
-
-            - All Validators are Servicers; not all Servicers are Validators
-
-            - Top 100 staked Servicers are validators (automatic)
-
-            - Only accounts for servicer stake balance transition
-
-            TODO_MAINNET(@Olshansk): Develop strategy for bootstrapping validators in Shannon with cosmos ecosystem'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        unstaked_balance:
-          title: Unstaked upokt tokens (account balance) available for claiming
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        unstaking_time:
-          description: 'The ISO 8601 UTC timestamp after which the Morse node/supplier unbonding period will have elapsed.
-
-            It reflects the "unbonding completion time" of the Morse node/supplier, but is called "unstaking time" to comply with necessary Morse data structures.'
-          type: string
-          format: date-time
-    pocket.supplier.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        min_stake:
-          description: 'min_stake is the minimum amount of uPOKT that a supplier must stake to be
-
-            included in network sessions and remain staked.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        staking_fee:
-          description: staking_fee is the fee charged by the protocol for staking a supplier.
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.service.RelayMiningDifficulty:
-      description: 'RelayMiningDifficulty is a message used to store the onchain Relay Mining
-
-        difficulty associated with a specific service ID.
-
-        TODO_TECHDEBT: Embed this message in the Service message.'
-      type: object
-      properties:
-        block_height:
-          description: 'The block height at which this relay mining difficulty was computed.
-
-            This is needed to determine how much time has passed since the last time
-
-            the exponential moving average was computed.'
-          type: string
-          format: int64
-        num_relays_ema:
-          description: The exponential moving average of the number of relays for this service.
-          type: string
-          format: uint64
-        service_id:
-          description: The service ID the relay mining difficulty is associated with.
-          type: string
-        target_hash:
-          description: 'The target hash determining the difficulty to mine relays for this service.
-
-            For example, if we use sha256 to hash the (RelayRequest,ReqlayResponse) tuple,
-
-            and the difficulty has 4 leading zero bits, then the target hash would be:
-
-            0b0000111... (until 32 bytes are filled up).'
-          type: string
-          format: byte
-    pocket.tokenomics.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.tokenomics.Params'
-    pocket.shared.ApplicationServiceConfig:
-      type: object
-      title: ApplicationServiceConfig holds the service configuration the application stakes for
-      properties:
-        service_id:
-          type: string
-          title: The Service ID for which the application is configured
-    pocket.application.PendingApplicationTransfer:
-      description: 'PendingTransfer is used to store the details of a pending transfer.
-
-        It is only intended to be used inside of an Application object.'
-      type: object
-      properties:
-        destination_address:
-          type: string
-        session_end_height:
-          type: string
-          format: uint64
-    pocket.shared.ConfigOptions:
-      description: "Enum to define configuration options\nTODO_RESEARCH: Should these be configs, SLAs or something else? There will be more discussion once we get closer to implementing onchain QoS.\n\n - UNKNOWN_CONFIG: Undefined config option\n - TIMEOUT: Timeout setting"
+    pocket.proof.ClaimProofStatus:
       type: string
-      default: UNKNOWN_CONFIG
+      title: 'Status of proof validation for a claim
+
+        Default is PENDING_VALIDATION regardless of proof requirement'
+      default: PENDING_VALIDATION
       enum:
-      - UNKNOWN_CONFIG
-      - TIMEOUT
-    cosmos.base.query.v1beta1.PageResponse:
-      description: "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
-      type: object
-      properties:
-        next_key:
-          description: 'next_key is the key to be passed to PageRequest.key to
-
-            query the next page most efficiently. It will be empty if
-
-            there are no more results.'
-          type: string
-          format: byte
-        total:
-          type: string
-          format: uint64
-          title: 'total is total number of results available if PageRequest.count_total
-
-            was set, its value is undefined otherwise'
-    pocket.application.QueryGetApplicationResponse:
-      type: object
-      properties:
-        application:
-          $ref: '#/components/schemas/pocket.application.Application'
-    google.rpc.Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/google.protobuf.Any'
-        message:
-          type: string
-    pocket.shared.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.shared.Params'
-    pocket.proof.QueryAllProofsResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-        proofs:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.proof.Proof'
-    pocket.proof.QueryAllClaimsResponse:
-      type: object
-      properties:
-        claims:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.proof.Claim'
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-    pocket.tokenomics.Params:
-      description: Params defines the parameters for the tokenomics module.
-      type: object
-      properties:
-        dao_reward_address:
-          description: 'dao_reward_address is where the DAO''s portion of claims submitted are distributed.
-
-
-            Bech32 cosmos address'
-          type: string
-        global_inflation_per_claim:
-          description: 'global_inflation_per_claim is the percentage of a claim''s claimable uPOKT amount to be minted on settlement.
-
-            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
-          type: number
-          format: double
-        mint_allocation_percentages:
-          description: 'mint_allocation_percentages represents the distribution of newly minted tokens.
-
-            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
-          $ref: '#/components/schemas/pocket.tokenomics.MintAllocationPercentages'
-        mint_equals_burn_claim_distribution:
-          description: 'mint_equals_burn_claim_distribution controls how the settlement amount is distributed
-
-            when global inflation is disabled (global_inflation_per_claim = 0).
-
-            MintEqualsBurnTLM: Only used by the MintEqualsBurnTLM at the end of claim settlement.'
-          $ref: '#/components/schemas/pocket.tokenomics.MintEqualsBurnClaimDistribution'
-    pocket.migration.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.migration.Params'
-    pocket.application.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        max_delegated_gateways:
-          description: 'max_delegated_gateways defines the maximum number of gateways that a single
-
-            application can delegate to. This is used to prevent performance issues
-
-            in case the relay ring signature becomes too large.'
-          type: string
-          format: uint64
-        min_stake:
-          description: min_stake is the minimum stake in upokt that an application must have to remain staked.
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.gateway.QueryParamsResponse:
-      description: QueryParamsResponse is response type for the Query/Params RPC method.
-      type: object
-      properties:
-        params:
-          description: params holds all the parameters of this module.
-          $ref: '#/components/schemas/pocket.gateway.Params'
-    pocket.proof.Params:
-      description: Params defines the parameters for the module.
-      type: object
-      properties:
-        proof_missing_penalty:
-          description: 'proof_missing_penalty is the number of tokens (uPOKT) which should be slashed from a supplier
-
-            when a proof is required (either via proof_requirement_threshold or proof_missing_penalty)
-
-            but is not provided.
-
-            TODO_MAINNET_MIGRATION: Consider renaming this to `proof_missing_penalty_upokt`.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        proof_request_probability:
-          description: 'proof_request_probability is the probability of a session requiring a proof
-
-            if it''s cost (i.e. compute unit consumption) is below the ProofRequirementThreshold.'
-          type: number
-          format: double
-        proof_requirement_threshold:
-          description: 'proof_requirement_threshold is the session cost (i.e. compute unit consumption)
-
-            threshold which asserts that a session MUST have a corresponding proof when its cost
-
-            is equal to or above the threshold. This is in contrast to the this requirement
-
-            being determined probabilistically via ProofRequestProbability.
-
-
-            TODO_MAINNET_MIGRATION: Consider renaming this to `proof_requirement_threshold_upokt`.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        proof_submission_fee:
-          description: 'proof_submission_fee is the number of tokens (uPOKT) which should be paid by
-
-            the supplier operator when submitting a proof.
-
-            This is needed to account for the cost of storing proofs onchain and prevent
-
-            spamming (i.e. sybil bloat attacks) the network with non-required proofs.
-
-            TODO_MAINNET_MIGRATION: Consider renaming this to `proof_submission_fee_upokt`.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-    pocket.supplier.QueryAllSuppliersResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-        supplier:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.Supplier'
+      - PENDING_VALIDATION
+      - VALIDATED
+      - INVALID
     pocket.tokenomics.MintEqualsBurnClaimDistribution:
       description: 'MintEqualsBurnClaimDistribution captures the distribution of claimable tokens.
 
@@ -1740,16 +1061,51 @@ components:
           description: supplier - % of claimable tokens sent to the block supplier account address.
           type: number
           format: double
-    pocket.proof.ClaimProofStatus:
-      type: string
-      title: 'Status of proof validation for a claim
+    pocket.application.QueryGetApplicationResponse:
+      type: object
+      properties:
+        application:
+          $ref: '#/components/schemas/pocket.application.Application'
+    pocket.tokenomics.MintAllocationPercentages:
+      description: 'MintAllocationPercentages captures the distribution of newly minted tokens.
 
-        Default is PENDING_VALIDATION regardless of proof requirement'
-      default: PENDING_VALIDATION
-      enum:
-      - PENDING_VALIDATION
-      - VALIDATED
-      - INVALID
+        The sum of all new tokens minted must equal 1.
+
+        GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.
+
+        TODO_DISTANT_FUTURE: Remove this once global inflation is disabled in perpetuity.'
+      type: object
+      properties:
+        application:
+          description: application - % of newley minted tokens sent to the application account address.
+          type: number
+          format: double
+        dao:
+          description: dao - % of newley minted tokens sent to the DAO reward address.
+          type: number
+          format: double
+        proposer:
+          description: proposer - % of newley minted tokens sent to the block proposer (i.e. validator0 account address.
+          type: number
+          format: double
+        source_owner:
+          description: source_owner - % of newley minted tokens sent to the service source owner account address.
+          type: number
+          format: double
+        supplier:
+          description: supplier - % of newley minted tokens sent to the block supplier account address.
+          type: number
+          format: double
+    pocket.gateway.QueryAllGatewaysResponse:
+      type: object
+      properties:
+        gateways:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.gateway.Gateway'
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
     pocket.shared.ServiceRevenueShare:
       type: object
       title: ServiceRevenueShare message to hold revenue share configuration details
@@ -1761,68 +1117,43 @@ components:
           type: string
           format: uint64
           title: The percentage of revenue share the recipient will receive
-    pocket.gateway.Gateway:
+    pocket.supplier.Params:
+      description: Params defines the parameters for the module.
       type: object
       properties:
-        address:
-          type: string
-          title: The Bech32 address of the gateway
-        stake:
-          title: The total amount of uPOKT the gateway has staked
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        unstake_session_end_height:
-          type: string
-          format: uint64
-          title: Session end height at which the gateway initiated unstaking (0 if not unstaking)
-    pocket.proof.QueryGetProofResponse:
-      type: object
-      properties:
-        proof:
-          $ref: '#/components/schemas/pocket.proof.Proof'
-    pocket.proof.Claim:
-      type: object
-      title: Claim is the serialized object stored onchain for claims pending to be proven
-      properties:
-        proof_validation_status:
-          title: 'Important: This field MUST only be set by proofKeeper#EnsureValidProofSignaturesAndClosestPath'
-          $ref: '#/components/schemas/pocket.proof.ClaimProofStatus'
-        root_hash:
-          description: 'Root hash from smt.SMST#Root().
+        min_stake:
+          description: 'min_stake is the minimum amount of uPOKT that a supplier must stake to be
 
-            TODO_UP_NEXT(@bryanchriswhite, #1497): Dehydrate the claim''s root hash from onchain events.'
+            included in network sessions and remain staked.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        staking_fee:
+          description: staking_fee is the fee charged by the protocol for staking a supplier.
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    cosmos.base.query.v1beta1.PageResponse:
+      description: "PageResponse is to be embedded in gRPC response messages where the\ncorresponding request message has used PageRequest.\n\n message SomeResponse {\n         repeated Bar results = 1;\n         PageResponse page = 2;\n }"
+      type: object
+      properties:
+        next_key:
+          description: 'next_key is the key to be passed to PageRequest.key to
+
+            query the next page most efficiently. It will be empty if
+
+            there are no more results.'
           type: string
           format: byte
-        session_header:
-          description: Session header this claim is for.
-          $ref: '#/components/schemas/pocket.session.SessionHeader'
-        supplier_operator_address:
-          description: 'Address of the supplier''s operator that submitted this claim.
-
-
-            the address of the supplier''s operator that submitted this claim'
+        total:
           type: string
-    pocket.shared.RPCType:
-      description: "- UNKNOWN_RPC: Undefined RPC type\n - GRPC: gRPC\n - WEBSOCKET: WebSocket\n - JSON_RPC: JSON-RPC\n - REST: REST\n - COMET_BFT: CometBFT (REST + JSON-RPC)"
-      type: string
-      title: Enum to define RPC types
-      default: UNKNOWN_RPC
-      enum:
-      - UNKNOWN_RPC
-      - GRPC
-      - WEBSOCKET
-      - JSON_RPC
-      - REST
-      - COMET_BFT
-    pocket.service.QueryAllServicesResponse:
+          format: uint64
+          title: 'total is total number of results available if PageRequest.count_total
+
+            was set, its value is undefined otherwise'
+    pocket.shared.ApplicationServiceConfig:
       type: object
+      title: ApplicationServiceConfig holds the service configuration the application stakes for
       properties:
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-        service:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.shared.Service'
+        service_id:
+          type: string
+          title: The Service ID for which the application is configured
     pocket.shared.Params:
       description: Params defines the parameters for the module.
       type: object
@@ -1903,44 +1234,78 @@ components:
             period will exceed the end of any active claim & proof lifecycles.'
           type: string
           format: uint64
-    pocket.service.QueryAllRelayMiningDifficultyResponse:
+    pocket.migration.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
       type: object
       properties:
-        pagination:
-          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
-        relayMiningDifficulty:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/pocket.service.RelayMiningDifficulty'
-    pocket.application.UndelegatingGatewayList:
-      description: 'UndelegatingGatewayList is used as the Value of `pending_undelegations`.
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.migration.Params'
+    pocket.application.PendingApplicationTransfer:
+      description: 'PendingTransfer is used to store the details of a pending transfer.
 
-        It is required to store a repeated list of strings as a map value.'
+        It is only intended to be used inside of an Application object.'
       type: object
       properties:
-        gateway_addresses:
-          type: array
-          items:
-            type: string
-    pocket.proof.Proof:
-      type: object
-      properties:
-        closest_merkle_proof:
-          description: The serialized SMST compacted proof from the `#ClosestProof()` method.
+        destination_address:
           type: string
-          format: byte
-        session_header:
-          description: The session header of the session that this claim is for.
-          $ref: '#/components/schemas/pocket.session.SessionHeader'
-        supplier_operator_address:
-          description: Address of the supplier's operator that submitted this proof.
+        session_end_height:
           type: string
-    pocket.session.QueryGetSessionResponse:
+          format: uint64
+    pocket.gateway.QueryGetGatewayResponse:
       type: object
       properties:
-        session:
-          $ref: '#/components/schemas/pocket.session.Session'
+        gateway:
+          $ref: '#/components/schemas/pocket.gateway.Gateway'
+    pocket.proof.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        proof_missing_penalty:
+          description: 'proof_missing_penalty is the number of tokens (uPOKT) which should be slashed from a supplier
+
+            when a proof is required (either via proof_requirement_threshold or proof_missing_penalty)
+
+            but is not provided.
+
+            TODO_MAINNET_MIGRATION: Consider renaming this to `proof_missing_penalty_upokt`.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        proof_request_probability:
+          description: 'proof_request_probability is the probability of a session requiring a proof
+
+            if it''s cost (i.e. compute unit consumption) is below the ProofRequirementThreshold.'
+          type: number
+          format: double
+        proof_requirement_threshold:
+          description: 'proof_requirement_threshold is the session cost (i.e. compute unit consumption)
+
+            threshold which asserts that a session MUST have a corresponding proof when its cost
+
+            is equal to or above the threshold. This is in contrast to the this requirement
+
+            being determined probabilistically via ProofRequestProbability.
+
+
+            TODO_MAINNET_MIGRATION: Consider renaming this to `proof_requirement_threshold_upokt`.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        proof_submission_fee:
+          description: 'proof_submission_fee is the number of tokens (uPOKT) which should be paid by
+
+            the supplier operator when submitting a proof.
+
+            This is needed to account for the cost of storing proofs onchain and prevent
+
+            spamming (i.e. sybil bloat attacks) the network with non-required proofs.
+
+            TODO_MAINNET_MIGRATION: Consider renaming this to `proof_submission_fee_upokt`.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.shared.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.shared.Params'
     pocket.shared.Metadata:
       description: 'Metadata message to hold additional metadata for a service.
 
@@ -1953,44 +1318,145 @@ components:
             TODO(@future): support dedicated openapi_ / openrpc_ fields once formats stabilize.'
           type: string
           format: byte
-    pocket.shared.SupplierEndpoint:
+    pocket.migration.QueryAllMorseClaimableAccountResponse:
       type: object
-      title: SupplierEndpoint message to hold service configuration details
       properties:
-        configs:
+        morseClaimableAccount:
           type: array
-          title: Additional configuration options for the endpoint
           items:
             type: object
-            $ref: '#/components/schemas/pocket.shared.ConfigOption'
-        rpc_type:
-          title: Type of RPC exposed on the url above
-          $ref: '#/components/schemas/pocket.shared.RPCType'
-        url:
-          type: string
-          title: URL of the endpoint
-    pocket.proof.QueryGetClaimResponse:
+            $ref: '#/components/schemas/pocket.migration.MorseClaimableAccount'
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+    pocket.gateway.Gateway:
       type: object
       properties:
-        claim:
-          $ref: '#/components/schemas/pocket.proof.Claim'
-    pocket.service.Params:
+        address:
+          type: string
+          title: The Bech32 address of the gateway
+        stake:
+          title: The total amount of uPOKT the gateway has staked
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        unstake_session_end_height:
+          type: string
+          format: uint64
+          title: Session end height at which the gateway initiated unstaking (0 if not unstaking)
+    pocket.proof.QueryAllProofsResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+        proofs:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.proof.Proof'
+    pocket.application.Application:
+      type: object
+      title: Application represents the onchain definition and state of an application
+      properties:
+        address:
+          type: string
+          title: Bech32 address of the application
+        delegatee_gateway_addresses:
+          description: 'TODO_MAINNET_MIGRATION(@bryanchriswhite): Rename `delegatee_gateway_addresses` to `gateway_addresses_delegated_to` for better clarity and consistency.
+
+            - Update all related configs, comments, variables, and function names throughout the codebase to reflect this change.
+
+            - This field is a non-nullable list of Bech32-encoded delegatee Gateway addresses.'
+          type: array
+          items:
+            type: string
+        pending_transfer:
+          title: Information about pending application transfers
+          $ref: '#/components/schemas/pocket.application.PendingApplicationTransfer'
+        pending_undelegations:
+          description: 'Mapping of session end heights to gateways being undelegated from
+
+            - Key: Height of the last block of the session when the undelegation transaction was committed
+
+            - Value: List of gateways being undelegated from at that session end height
+
+            TODO_DOCUMENT(@red-0ne): Document the complete flow and rationale behind this mapping.
+
+            - Ensure the documentation explains why tracking pending undelegations by session end height is necessary.
+
+            - See: https://github.com/pokt-network/poktroll/issues/476#issuecomment-2052639906 for context and examples.'
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/pocket.application.UndelegatingGatewayList'
+        service_configs:
+          type: array
+          title: "CRITICAL: Must contain EXACTLY ONE service config\n- Enforces a single service configuration per application to prevent over-servicing.\n- Field is repeated for legacy reasons and potential future compatibility.\n- References for rationale:\n  - https://github.com/pokt-network/poktroll/pull/750#discussion_r1735025033\n  - https://www.notion.so/buildwithgrove/Off-chain-Application-Stake-Tracking-6a8bebb107db4f7f9dc62cbe7ba555f7"
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ApplicationServiceConfig'
+        stake:
+          title: Total amount of staked uPOKT
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        unstake_session_end_height:
+          type: string
+          format: uint64
+          title: Session end height when application initiated unstaking (0 if not unstaking)
+    pocket.session.Session:
+      description: 'Session is a fully hydrated session object that contains all the information for the Session
+
+        and its participants.'
+      type: object
+      properties:
+        application:
+          title: A fully hydrated application object this session is for
+          $ref: '#/components/schemas/pocket.application.Application'
+        header:
+          title: The header of the session containing lightweight data
+          $ref: '#/components/schemas/pocket.session.SessionHeader'
+        num_blocks_per_session:
+          type: string
+          format: int64
+          title: The number of blocks per session when this session started
+        session_id:
+          type: string
+          title: A unique pseudorandom ID for this session
+        session_number:
+          type: string
+          format: int64
+          title: The session number since genesis
+        suppliers:
+          type: array
+          title: A fully hydrated set of servicers that are serving the application
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.Supplier'
+    pocket.session.QueryGetSessionResponse:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/pocket.session.Session'
+    pocket.application.Params:
       description: Params defines the parameters for the module.
       type: object
       properties:
-        add_service_fee:
-          description: 'The amount of uPOKT required to add a new service.
+        max_delegated_gateways:
+          description: 'max_delegated_gateways defines the maximum number of gateways that a single
 
-            This will be deducted from the signer''s account balance,
+            application can delegate to. This is used to prevent performance issues
 
-            and transferred to the pocket network foundation.'
-          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
-        target_num_relays:
-          description: 'target_num_relays is the target for the EMA of the number of relays per session.
-
-            Per service, onchain relay mining difficulty will be adjusted to maintain this target.'
+            in case the relay ring signature becomes too large.'
           type: string
           format: uint64
+        min_stake:
+          description: min_stake is the minimum stake in upokt that an application must have to remain staked.
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.service.QueryAllRelayMiningDifficultyResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+        relayMiningDifficulty:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.service.RelayMiningDifficulty'
     pocket.migration.Params:
       description: 'Params defines the parameters for the module.
 
@@ -2027,3 +1493,537 @@ components:
             - Contain at least one Morse account/actor claim messages
 
             - Do not contain any other messages other than Morse account/actor claim messages'
+    pocket.service.QueryGetRelayMiningDifficultyResponse:
+      type: object
+      properties:
+        relayMiningDifficulty:
+          $ref: '#/components/schemas/pocket.service.RelayMiningDifficulty'
+    pocket.session.SessionHeader:
+      description: 'SessionHeader is a lightweight header for a session that can be passed around.
+
+        It is the minimal amount of data required to hydrate & retrieve all data relevant to the session.'
+      type: object
+      properties:
+        application_address:
+          description: The Bech32 address of the application.
+          type: string
+        service_id:
+          type: string
+          title: The service id this session is for
+        session_end_block_height:
+          description: 'Note that`session_end_block_height` is a derivative of (`start` + `num_blocks_per_session`)
+
+            as governed by onchain params at the time of the session start.
+
+            It is stored as an additional field to simplify business logic in case
+
+            the number of blocks_per_session changes during the session.
+
+
+            The height at which this session ended, this is the last block of the session'
+          type: string
+          format: int64
+        session_id:
+          description: A unique pseudorandom ID for this session
+          type: string
+          title: 'NOTE: session_id can be derived from the above values using onchain but is included in the header for convenience'
+        session_start_block_height:
+          type: string
+          format: int64
+          title: The height at which this session started
+    pocket.session.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.session.Params'
+    pocket.gateway.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.gateway.Params'
+    pocket.proof.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.proof.Params'
+    pocket.service.QueryAllServicesResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+        service:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.Service'
+    google.protobuf.Any:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    pocket.service.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        add_service_fee:
+          description: 'The amount of uPOKT required to add a new service.
+
+            This will be deducted from the signer''s account balance,
+
+            and transferred to the pocket network foundation.'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        target_num_relays:
+          description: 'target_num_relays is the target for the EMA of the number of relays per session.
+
+            Per service, onchain relay mining difficulty will be adjusted to maintain this target.'
+          type: string
+          format: uint64
+    pocket.shared.SupplierServiceConfig:
+      type: object
+      title: SupplierServiceConfig holds the service configuration the supplier stakes for
+      properties:
+        endpoints:
+          type: array
+          title: List of endpoints for the service
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.SupplierEndpoint'
+        rev_share:
+          type: array
+          title: List of revenue share configurations for the service
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ServiceRevenueShare'
+        service_id:
+          type: string
+          title: The Service ID for which the supplier is configured
+    pocket.proof.QueryGetProofResponse:
+      type: object
+      properties:
+        proof:
+          $ref: '#/components/schemas/pocket.proof.Proof'
+    pocket.migration.MorseClaimableAccount:
+      description: 'Next free index: 11'
+      type: object
+      title: "MorseClaimableAccount\n- Onchain (persisted) representation of a Morse account claimable as part of Morse -> Shannon migration\n- Created during MorseAccountState import (see: MsgImportMorseClaimableAccount)\n- Created ONLY ONCE and NEVER deleted (per morse_src_address per network / re-genesis),\n  unless the allow_morse_account_import_overwrite migration param is enabled\n- Updated ONLY ONCE, when claimed (per morse_src_address per network / re-genesis)"
+      properties:
+        application_stake:
+          title: Staked tokens for application actor corresponding to this account address
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        claimed_at_height:
+          type: string
+          format: int64
+          title: 'Shannon height at which the account was claimed
+
+            Intended to remain empty until the account is claimed'
+        morse_output_address:
+          description: "ONLY applicable to Morse node/supplier accounts.\nHex-encoded address of the Morse output account/wallet associated with the Morse node/supplier.\n- E.g.: 00f9900606fa3d5c9179fc0c8513078a53a2073e\n- Morse custodial (i.e. owner) address, which owns the staked tokens of the operator.\n  See 'pocket nodes --help' for more information. Note that this refers to the Morse CLI."
+          type: string
+        morse_src_address:
+          description: "Hex-encoded address of the Morse account whose balance will be claimed.\nIf this MorseClaimableAccount represents a Morse node/supplier:\n  - Morse non-custodial (i.e. operator) address.\n  - If morse_output_address is not set, this is the custodial address.\n  - See 'pocket nodes --help' for more information. Note that this refers to the Morse CLI."
+          type: string
+        shannon_dest_address:
+          type: string
+          title: 'bech32-encoded address of the Shannon account to mint claimed balance
+
+            Intended to remain empty until the account is claimed'
+        supplier_stake:
+          title: 'Staked tokens for supplier actor corresponding to this account address
+
+            DEV_NOTE: Context for Morse:
+
+            - Supplier = Servicer or Node (not a full node) in Morse
+
+            - All Validators are Servicers; not all Servicers are Validators
+
+            - Top 100 staked Servicers are validators (automatic)
+
+            - Only accounts for servicer stake balance transition
+
+            TODO_MAINNET(@Olshansk): Develop strategy for bootstrapping validators in Shannon with cosmos ecosystem'
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        unstaked_balance:
+          title: Unstaked upokt tokens (account balance) available for claiming
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        unstaking_time:
+          description: 'The ISO 8601 UTC timestamp after which the Morse node/supplier unbonding period will have elapsed.
+
+            It reflects the "unbonding completion time" of the Morse node/supplier, but is called "unstaking time" to comply with necessary Morse data structures.'
+          type: string
+          format: date-time
+    pocket.shared.RPCType:
+      description: "- UNKNOWN_RPC: Undefined RPC type\n - GRPC: gRPC\n - WEBSOCKET: WebSocket\n - JSON_RPC: JSON-RPC\n - REST: REST\n - COMET_BFT: CometBFT (REST + JSON-RPC)"
+      type: string
+      title: Enum to define RPC types
+      default: UNKNOWN_RPC
+      enum:
+      - UNKNOWN_RPC
+      - GRPC
+      - WEBSOCKET
+      - JSON_RPC
+      - REST
+      - COMET_BFT
+    pocket.supplier.QueryAllSuppliersResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+        supplier:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.Supplier'
+    pocket.application.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.application.Params'
+    pocket.application.UndelegatingGatewayList:
+      description: 'UndelegatingGatewayList is used as the Value of `pending_undelegations`.
+
+        It is required to store a repeated list of strings as a map value.'
+      type: object
+      properties:
+        gateway_addresses:
+          type: array
+          items:
+            type: string
+    pocket.supplier.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.supplier.Params'
+    pocket.gateway.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        min_stake:
+          description: min_stake is the minimum amount of uPOKT that a gateway must stake.
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+    pocket.proof.Claim:
+      type: object
+      title: Claim is the serialized object stored onchain for claims pending to be proven
+      properties:
+        proof_validation_status:
+          title: 'Important: This field MUST only be set by proofKeeper#EnsureValidProofSignaturesAndClosestPath'
+          $ref: '#/components/schemas/pocket.proof.ClaimProofStatus'
+        root_hash:
+          description: 'Root hash from smt.SMST#Root().
+
+            TODO_UP_NEXT(@bryanchriswhite, #1497): Dehydrate the claim''s root hash from onchain events.'
+          type: string
+          format: byte
+        session_header:
+          description: Session header this claim is for.
+          $ref: '#/components/schemas/pocket.session.SessionHeader'
+        supplier_operator_address:
+          description: 'Address of the supplier''s operator that submitted this claim.
+
+
+            the address of the supplier''s operator that submitted this claim'
+          type: string
+    pocket.supplier.QueryGetSupplierResponse:
+      type: object
+      properties:
+        supplier:
+          $ref: '#/components/schemas/pocket.shared.Supplier'
+    google.rpc.Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/google.protobuf.Any'
+        message:
+          type: string
+    pocket.shared.Service:
+      type: object
+      title: Service message to encapsulate unique and semantic identifiers for a service on the network
+      properties:
+        compute_units_per_relay:
+          description: Compute units required per relay for this service
+          type: string
+          format: uint64
+          title: 'The cost of a single relay for this service in terms of compute units.
+
+            Must be used alongside the global ''compute_units_to_tokens_multiplier'' to calculate the cost of a relay for this service.
+
+            cost_per_relay_for_specific_service = compute_units_per_relay_for_specific_service * compute_units_to_tokens_multiplier_global_value'
+        id:
+          description: Unique identifier for the service
+          type: string
+          title: For example, what if we want to request a session for a certain service but with some additional configs that identify it?
+        metadata:
+          description: 'Optional metadata containing an experimental API specification for the service.
+
+            When exposed via JSON, this field is base64 encoded and MUST be <= 100 KiB when decoded.'
+          $ref: '#/components/schemas/pocket.shared.Metadata'
+        name:
+          description: (Optional) Human readable description of the service
+          type: string
+          title: 'TODO_POST_MAINNET: Rename service.name to service.description'
+        owner_address:
+          description: 'The owner address that created the service.
+
+            It is the address that receives rewards based on the Service''s onchain usage
+
+            It is the only address that can update the service configuration (e.g. compute_units_per_relay),
+
+            or make other updates to it.
+
+
+            The Bech32 address of the service owner / creator'
+          type: string
+    pocket.service.RelayMiningDifficulty:
+      description: 'RelayMiningDifficulty is a message used to store the onchain Relay Mining
+
+        difficulty associated with a specific service ID.
+
+        TODO_TECHDEBT: Embed this message in the Service message.'
+      type: object
+      properties:
+        block_height:
+          description: 'The block height at which this relay mining difficulty was computed.
+
+            This is needed to determine how much time has passed since the last time
+
+            the exponential moving average was computed.'
+          type: string
+          format: int64
+        num_relays_ema:
+          description: The exponential moving average of the number of relays for this service.
+          type: string
+          format: uint64
+        service_id:
+          description: The service ID the relay mining difficulty is associated with.
+          type: string
+        target_hash:
+          description: 'The target hash determining the difficulty to mine relays for this service.
+
+            For example, if we use sha256 to hash the (RelayRequest,ReqlayResponse) tuple,
+
+            and the difficulty has 4 leading zero bits, then the target hash would be:
+
+            0b0000111... (until 32 bytes are filled up).'
+          type: string
+          format: byte
+    pocket.tokenomics.Params:
+      description: Params defines the parameters for the tokenomics module.
+      type: object
+      properties:
+        dao_reward_address:
+          description: 'dao_reward_address is where the DAO''s portion of claims submitted are distributed.
+
+
+            Bech32 cosmos address'
+          type: string
+        global_inflation_per_claim:
+          description: 'global_inflation_per_claim is the percentage of a claim''s claimable uPOKT amount to be minted on settlement.
+
+            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
+          type: number
+          format: double
+        mint_allocation_percentages:
+          description: 'mint_allocation_percentages represents the distribution of newly minted tokens.
+
+            GlobalMintTLM: Only used by the GlobalMintTLM at the end of claim settlement.'
+          $ref: '#/components/schemas/pocket.tokenomics.MintAllocationPercentages'
+        mint_equals_burn_claim_distribution:
+          description: 'mint_equals_burn_claim_distribution controls how the settlement amount is distributed
+
+            when global inflation is disabled (global_inflation_per_claim = 0).
+
+            MintEqualsBurnTLM: Only used by the MintEqualsBurnTLM at the end of claim settlement.'
+          $ref: '#/components/schemas/pocket.tokenomics.MintEqualsBurnClaimDistribution'
+    pocket.proof.Proof:
+      type: object
+      properties:
+        closest_merkle_proof:
+          description: The serialized SMST compacted proof from the `#ClosestProof()` method.
+          type: string
+          format: byte
+        session_header:
+          description: The session header of the session that this claim is for.
+          $ref: '#/components/schemas/pocket.session.SessionHeader'
+        supplier_operator_address:
+          description: Address of the supplier's operator that submitted this proof.
+          type: string
+    pocket.shared.Supplier:
+      type: object
+      title: Supplier represents an actor in Pocket Network that provides RPC services
+      properties:
+        operator_address:
+          description: 'Operator address managing the offchain server
+
+            Immutable for supplier''s lifespan - requires unstake/re-stake to change.
+
+            Can update supplier configs except for owner address.'
+          type: string
+        owner_address:
+          type: string
+          title: 'Owner address that controls the staked funds and receives rewards by default
+
+            Cannot be updated by the operator'
+        service_config_history:
+          description: 'List of historical service configuration updates, tracking the suppliers
+
+            services update and corresponding activation heights.'
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ServiceConfigUpdate'
+        services:
+          type: array
+          title: List of service configurations supported by this supplier
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.SupplierServiceConfig'
+        stake:
+          title: Total amount of staked uPOKT
+          $ref: '#/components/schemas/cosmos.base.v1beta1.Coin'
+        unstake_session_end_height:
+          type: string
+          format: uint64
+          title: Session end height when supplier initiated unstaking (0 if not unstaking)
+    cosmos.base.v1beta1.Coin:
+      description: 'Coin defines a token with a denomination and an amount.
+
+
+        NOTE: The amount field is an Int which implements the custom method
+
+        signatures required by gogoproto.'
+      type: object
+      properties:
+        amount:
+          type: string
+        denom:
+          type: string
+    pocket.session.Params:
+      description: Params defines the parameters for the module.
+      type: object
+      properties:
+        num_suppliers_per_session:
+          description: 'num_suppliers_per_session is the maximum number of suppliers per session
+
+            (application:supplier pair for a given session number).'
+          type: string
+          format: uint64
+    pocket.migration.QueryMorseClaimableAccountResponse:
+      type: object
+      properties:
+        morseClaimableAccount:
+          $ref: '#/components/schemas/pocket.migration.MorseClaimableAccount'
+    pocket.proof.QueryGetClaimResponse:
+      type: object
+      properties:
+        claim:
+          $ref: '#/components/schemas/pocket.proof.Claim'
+    pocket.shared.SupplierEndpoint:
+      type: object
+      title: SupplierEndpoint message to hold service configuration details
+      properties:
+        configs:
+          type: array
+          title: Additional configuration options for the endpoint
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.shared.ConfigOption'
+        rpc_type:
+          title: Type of RPC exposed on the url above
+          $ref: '#/components/schemas/pocket.shared.RPCType'
+        url:
+          type: string
+          title: URL of the endpoint
+    pocket.application.QueryAllApplicationsResponse:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.application.Application'
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+    pocket.shared.ServiceConfigUpdate:
+      description: 'ServiceConfigUpdate tracks a change in a supplier''s service configurations
+
+        at a specific block height, enabling tracking of configuration changes over time.
+
+        This record helps maintain a complete history of service configs and their availability periods.'
+      type: object
+      properties:
+        activation_height:
+          type: string
+          format: int64
+          title: Block height at which this service configuration became active in the network
+        deactivation_height:
+          type: string
+          format: int64
+          title: "Block height at which this service configuration was deactivated (0 if still active)\nFor service configs scheduled for deactivation:\n- This field stores the block height when deactivation will occur\n- After deactivation, the config remains in history only as needed for claim settlement\n- Once no longer required for settlement, the config is automatically removed by\n  the EndBlockerPruneSupplierServiceConfigHistory process"
+        operator_address:
+          type: string
+          title: Operator address of the supplier corresponding to the service configuration change
+        service:
+          title: The specific service configuration that was added, modified or scheduled for removal
+          $ref: '#/components/schemas/pocket.shared.SupplierServiceConfig'
+    pocket.tokenomics.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.tokenomics.Params'
+    pocket.shared.ConfigOption:
+      type: object
+      title: Key-value wrapper for config options, as proto maps can't be keyed by enums
+      properties:
+        key:
+          title: Config option key
+          $ref: '#/components/schemas/pocket.shared.ConfigOptions'
+        value:
+          type: string
+          title: Config option value
+    pocket.proof.QueryAllClaimsResponse:
+      type: object
+      properties:
+        claims:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/pocket.proof.Claim'
+        pagination:
+          $ref: '#/components/schemas/cosmos.base.query.v1beta1.PageResponse'
+    pocket.service.QueryGetServiceResponse:
+      type: object
+      properties:
+        service:
+          $ref: '#/components/schemas/pocket.shared.Service'
+    pocket.shared.ConfigOptions:
+      description: "Enum to define configuration options\nTODO_RESEARCH: Should these be configs, SLAs or something else? There will be more discussion once we get closer to implementing onchain QoS.\n\n - UNKNOWN_CONFIG: Undefined config option\n - TIMEOUT: Timeout setting"
+      type: string
+      default: UNKNOWN_CONFIG
+      enum:
+      - UNKNOWN_CONFIG
+      - TIMEOUT
+    pocket.service.QueryParamsResponse:
+      description: QueryParamsResponse is response type for the Query/Params RPC method.
+      type: object
+      properties:
+        params:
+          description: params holds all the parameters of this module.
+          $ref: '#/components/schemas/pocket.service.Params'

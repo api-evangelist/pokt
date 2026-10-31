@@ -1,4 +1,4 @@
-# Pocket Network (POKT)
+# Pocket Network
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,51 +64,163 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Pocket Network is a decentralized, permissionless RPC infrastructure network providing free public API access to 60+ blockchain chains including Ethereum, Avalanche, Polygon, Solana, Base, Arbitrum, Optimism, and other EVM-compatible and non-EVM networks. The Shannon upgrade (June 2025) made Pocket the first open, permissionless API network where anyone can stake POKT tokens to deploy gateways and supply relay nodes without centralized approval.
+Pocket Network is a decentralized, permissionless RPC infrastructure network providing free public API access to 60+ blockchain chains including Ethereum, Avalanche, Polygon, Solana, and other EVM-compatible and non-EVM networks. The Shannon upgrade (June 2025) made Pocket the first open, permissionless API network where anyone can stake POKT tokens to deploy gateways and supply nodes without centralized approval.
 
-## APIs
+**Areas:** Blockchain · RPC · Decentralized · Web3 · Ethereum · EVM · Infrastructure
 
-- **Public RPC API** - Free, keyless JSON-RPC 2.0 endpoints for 60+ chains via `https://{chain}.api.pocket.network`
-- **Shannon Chain API** - Cosmos SDK REST, gRPC, and CometBFT RPC for protocol-level interactions
-- **PATH Gateway API** - Open-source gateway framework health, readiness, and metrics endpoints
+## Pocket Network on APIs.io
 
-## Resources
+Everything profiled for Pocket Network is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pokt/](https://apis.io/providers/pokt/)** — or go straight to one of the APIs or properties below.
+
+### APIs (7)
+
+- [Pocket Network Shannon Chain API](https://apis.io/apis/pokt/pocket-network-shannon-chain-api/) — Cosmos SDK-based REST and gRPC API for interacting with the Pocket Network Shannon protocol chain. Provides endpoints for querying applications, suppliers,…
+- [Pocket Network PATH Gateway API](https://apis.io/apis/pokt/pocket-network-path-gateway-api/) — PATH (Pocket API and Toolkit Harness) is an open-source framework for deploying permissionless gateways on top of Pocket Network. Exposes health, readiness,…
+- [Pocket Network Msg API](https://apis.io/apis/pokt/pokt-msg-api/) — The Msg API from Pocket Network — 34 operation(s) for msg.
+- [Pocket Network Query API](https://apis.io/apis/pokt/pokt-query-api/) — The Query API from Pocket Network — 26 operation(s) for query.
+- [Pocket Network Disqualified Endpoints API](https://apis.io/apis/pokt/pokt-disqualified-endpoints-api/) — The Disqualified Endpoints API from Pocket Network — 1 operation(s) for disqualified endpoints.
+- [Pocket Network Healthz API](https://apis.io/apis/pokt/pokt-healthz-api/) — The Healthz API from Pocket Network — 1 operation(s) for healthz.
+- [Pocket Network PATH Path API & Toolkit Harness API](https://apis.io/apis/pokt/pokt-path-path-api-toolkit-harness-api/) — The PATH Path API & Toolkit Harness API from Pocket Network — 1 operation(s) for path path api & toolkit harness.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Pokt Agentic Access](https://apis.io/agentic-access/pokt/pokt-agentic-access/)
+
+#### JSON Schema (10)
+
+The data models the API reads and writes.
+
+- [Application represents the onchain definition and state of an application](https://apis.io/schemas/pokt/pocket_application_Application/)
+- [pocket.gateway.Gateway](https://apis.io/schemas/pokt/pocket_gateway_Gateway/)
+- [pocket.proof.Proof](https://apis.io/schemas/pokt/pocket_proof_Proof/)
+- [pocket.session.Session](https://apis.io/schemas/pokt/pocket_session_Session/)
+- [Service message to encapsulate unique and semantic identifiers for a service on the network](https://apis.io/schemas/pokt/pocket_shared_Service/)
+- [Supplier represents an actor in Pocket Network that provides RPC services](https://apis.io/schemas/pokt/pocket_shared_Supplier/)
+- [SupplierEndpoint message to hold service configuration details](https://apis.io/schemas/pokt/pocket_shared_SupplierEndpoint/)
+- [SupplierServiceConfig holds the service configuration the supplier stakes for](https://apis.io/schemas/pokt/pocket_shared_SupplierServiceConfig/)
+- [pocket.tokenomics.Params](https://apis.io/schemas/pokt/pocket_tokenomics_Params/)
+- [ServiceID](https://apis.io/schemas/pokt/serviceid/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [context Context](https://apis.io/jsonld/pokt/context/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Eth_Blocknumber](https://apis.io/examples/pokt/eth_blockNumber/)
+- [Eth_Call](https://apis.io/examples/pokt/eth_call/)
+- [Path_Healthz](https://apis.io/examples/pokt/path_healthz/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [PATH - Path & Toolkit Harness API API](https://apis.io/collections/pokt/open-pokt-api-api/)
+- [PATH - Path & Toolkit Harness API Msg API](https://apis.io/collections/pokt/open-pokt-msg-api/)
+- [PATH - Path & Toolkit Harness API Query API](https://apis.io/collections/pokt/open-pokt-query-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Pocket Network — jsonschema rules](https://apis.io/rules/pokt/pokt-jsonschema-spectral-rules/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Pokt Domain Security](https://apis.io/security/pokt/pokt-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/pokt/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/pokt/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/pokt/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://pocket.network/)
 - [Documentation](https://docs.pocket.network/)
-- [Public API Portal](https://api.pocket.network/)
-- [GitHub Organization](https://github.com/pokt-network/)
-- [Forum](https://forum.pokt.network/)
-- [Explorer](https://explorer.pokt.network/)
+- [Pricing](https://pocket.network/save-on-rpc-path/)
 - [Blog](https://pocket.network/blog/)
-- [Discord](https://discord.gg/pokt)
+- [Terms of service](https://pocket.network/terms-of-use/)
+- [Privacy policy](https://pocket.network/privacy-policy/)
+- [GitHub](https://github.com/pokt-network/)
+- [Status](https://pocketnetwork.statuspage.io/)
 
-## Access
+## API Evangelist rating
 
-All public RPC endpoints follow the pattern:
+**Kin Score 36.4** — thin · rubric 0.24.0 · scored 2026-10-17
 
-```
-POST https://{chain-slug}.api.pocket.network
-Content-Type: application/json
-```
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 47.2 |
+| Contract governance | 9.8 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 39.5 |
 
-No API key required. Example chains: `eth`, `poly`, `avax`, `base`, `arb-one`, `op`, `solana`.
+**Agent readiness 22.3** — agent-aware
 
-## Plans & Pricing
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-See [plans/plans.yml](plans/plans.yml) for full tier details.
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
 
-| Plan | Cost | Rate Limit |
-|------|------|------------|
-| Public RPC (Free) | $0 | 2000 req/min per IP |
-| Application Staking | POKT stake | Unlimited |
-| Gateway Delegation | Varies by operator | Unlimited |
-| PATH Operator (Wholesale) | ~$1.58/M ETH relays | Unlimited |
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pokt/](https://apis.io/providers/pokt/).
 
-## FinOps
+## How this profile is made
 
-Pricing is based on Compute Units (CUs) per relay. See [finops/finops.yml](finops/finops.yml) for chain-specific CU rates and volume rebate tiers (up to 40% discount at 1.25T CU/day).
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-## Catalog
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Pocket Network: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-This repository is part of the [APIs.json](https://apisjson.org) catalog maintained by [API Evangelist](https://apievangelist.com).
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pokt/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
